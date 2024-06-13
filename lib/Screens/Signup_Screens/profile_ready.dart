@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/get_location.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Services/firebase_services.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'bio_signup.dart';
 
@@ -69,7 +65,7 @@ class _ProfileReadyState extends State<ProfileReady> {
             city: final_City,
             country: final_Country,
             cvvNumber: cvvNumber,
-            cardnumber: cardnumber,
+            cardnumber: cardNumber,
             cardname: cardname)
         .then((_) {
       // When the async function completes, stop the timer
@@ -191,13 +187,13 @@ class _ProfileReadyState extends State<ProfileReady> {
                             padding: EdgeInsets.only(bottom: screenHeight * .1),
                             child: InkWell(
                               onTap: () {
-                                setUserLoggedIn();
-                                Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: HomePage(),
-                                        duration: const Duration(seconds: 1)));
+                                // setUserLoggedIn();
+                                // Navigator.pushReplacement(
+                                //     context,
+                                //     PageTransition(
+                                //         type: PageTransitionType.fade,
+                                //         child: HomePage(),
+                                //         duration: const Duration(seconds: 1)));
                               },
                               child: Container(
                                 height: screenHeight * 0.07,

@@ -195,22 +195,19 @@ class _PaymentSignUpState extends State<PaymentSignUp> {
                       Center(
                         child: InkWell(
                           onTap: () {
-                            if (cvvNumber.runtimeType == int &&
-                                cardnumber.runtimeType == int &&
-                                cvvNumber != null &&
-                                cardnumber != null) {
+                            if (cvvNumber != null &&
+                                cardNumber != null &&
+                                expiryDate != null) {
                               setState(() {
                                 cardname = payments_name[selected_index!];
-                                print(cardnumber);
+                                print(cardNumber);
                                 print(cvvNumber);
                                 print(expiryDate);
                               });
-                              // Navigator.pushReplacement(
-                              //     context,
-                              //     PageTransition(
-                              //         type: PageTransitionType.fade,
-                              //         child: PictureSignUp(),
-                              //         duration: const Duration(seconds: 1)));
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PictureSignUp()));
                             }
                           },
                           child: Container(

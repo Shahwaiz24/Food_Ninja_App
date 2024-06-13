@@ -326,8 +326,8 @@ class _BioSignUpState extends State<BioSignUp> {
                               });
                             } else if (iserror == 'All Good') {
                               setState(() {
-                                firstName = userSignInFirstName;
-                                lastName = userSignInLastName;
+                                userSignInFirstName = firstName!;
+                                userSignInLastName = lastName!;
                               });
                               Navigator.pushReplacement(
                                   context,

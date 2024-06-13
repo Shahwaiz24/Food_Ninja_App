@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import this for TextInputFormatter
-import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 
-int? cardnumber;
-int? cvvNumber;
+// Variables to store card details
+String? cardNumber;
+String? cvvNumber;
 String? expiryDate;
 
 // Controllers
@@ -23,6 +23,7 @@ class PaymentDialog extends StatefulWidget {
 class _PaymentDialogState extends State<PaymentDialog> {
   bool isError = false;
 
+  // Custom formatter for card number with spaces after every 4 digits
   final cardNumberSpaceFormatter = TextInputFormatter.withFunction(
     (oldValue, newValue) {
       final text = newValue.text.replaceAll(' ', '');
@@ -38,6 +39,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
     },
   );
 
+  // Custom formatter for expiry date in MM/YY format
   final expiryDateCustomFormatter = TextInputFormatter.withFunction(
     (oldValue, newValue) {
       final text = newValue.text;
@@ -51,23 +53,20 @@ class _PaymentDialogState extends State<PaymentDialog> {
     },
   );
 
-  void validateCardNumber() {
-    final cardNumberStr = cardNumberController.text.replaceAll(' ', '');
-    if (cardNumberStr.length != 16) {
+  void validateAndSaveCardDetails() {
+    setState(() {
+      isError = false;
+    });
+
+    final cardNumberStr = cardNumberController.text;
+    if (cardNumberStr.replaceAll(' ', '').length != 16) {
       setState(() {
         isError = true;
       });
       return;
     }
 
-    try {
-      cardnumber = int.parse(cardNumberStr);
-    } catch (e) {
-      setState(() {
-        isError = true;
-      });
-      return;
-    }
+    cardNumber = cardNumberStr;
 
     final cvvStr = cvvController.text;
     if (cvvStr.length != 3) {
@@ -77,13 +76,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
       return;
     }
 
-    try {
-      cvvNumber = int.parse(cvvStr);
-    } catch (e) {
+    cvvNumber = cvvStr;
+
+    final expiryDateStr = expiryDateController.text;
+    if (expiryDateStr.length != 5 || !expiryDateStr.contains('/')) {
       setState(() {
         isError = true;
       });
+      return;
     }
+
+    expiryDate = expiryDateStr;
   }
 
   @override
@@ -101,6 +104,11 @@ class _PaymentDialogState extends State<PaymentDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
+            onChanged: (value) {
+              setState(() {
+                cardNumber = cardNumberController.text;
+              });
+            },
             controller: cardNumberController,
             keyboardType: TextInputType.number,
             inputFormatters: [cardNumberSpaceFormatter],
@@ -114,6 +122,11 @@ class _PaymentDialogState extends State<PaymentDialog> {
             children: <Widget>[
               Expanded(
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      expiryDate = expiryDateController.text;
+                    });
+                  },
                   controller: expiryDateController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [expiryDateCustomFormatter],
@@ -126,6 +139,11 @@ class _PaymentDialogState extends State<PaymentDialog> {
               const SizedBox(width: 10),
               Expanded(
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      cvvNumber = cvvController.text;
+                    });
+                  },
                   maxLength: 3,
                   controller: cvvController,
                   keyboardType: TextInputType.number,
@@ -150,13 +168,16 @@ class _PaymentDialogState extends State<PaymentDialog> {
             ),
           ),
           onPressed: () {
-            setState(() {
-              isError = false;
-            });
-            validateCardNumber();
-
+            validateAndSaveCardDetails();
             if (!isError) {
               Navigator.of(context).pop();
+              // Handle successful validation
+              print("Card Number: $cardNumber");
+              print("CVV Number: $cvvNumber");
+              print("Expiry Date: $expiryDate");
+            } else {
+              // Handle validation error
+              print("Validation Error");
             }
           },
         ),

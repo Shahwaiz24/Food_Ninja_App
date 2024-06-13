@@ -490,9 +490,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       } else if (useremail!.endsWith('@gmail.com') &&
                           username!.contains('_') &&
                           userpass!.length >= 8) {
-                        useremail = userSignInEmail;
-                        userpass = userSignInPass;
-                        username = userSignInUsername;
+                        setState(() {
+                          userSignInEmail = useremail!;
+                          userSignInPass = userpass!;
+                          userSignInUsername = username!;
+                        });
+
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
