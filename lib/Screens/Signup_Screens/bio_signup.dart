@@ -325,6 +325,10 @@ class _BioSignUpState extends State<BioSignUp> {
                                     'Enter Your Mobile Number in Digits';
                               });
                             } else if (iserror == 'All Good') {
+                              setState(() {
+                                firstName = userSignInFirstName;
+                                lastName = userSignInLastName;
+                              });
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

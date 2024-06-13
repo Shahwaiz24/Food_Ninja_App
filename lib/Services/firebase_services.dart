@@ -1,4 +1,11 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
+import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 
 class FirebaseServices {
   static final databaseRef = FirebaseDatabase.instance.ref('Users DataBase');
@@ -19,6 +26,22 @@ class FirebaseServices {
     required cardname,
   }) async {
     try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: userSignInEmail, password: userSignInPass);
+    } catch (e) {
+      print('Erorr in Auth ${e.toString()}');
+    }
+
+    try {
+      await ImageUrlGetter.uploadImage(
+          image: selectedimage,
+          Firstname: userSignInFirstName,
+          Lastname: userSignInLastName);
+    } catch (e) {
+      print('Image error: ${e.toString()}');
+    }
+
+    try {
       // ignore: unnecessary_string_interpolations
       await databaseRef.child("$userSignInPass").set({
         'username': userSignInUsername,
@@ -31,7 +54,7 @@ class FirebaseServices {
           'expirydate': expiryDate,
           'cvv': cvvNumber,
           'cardnumber': cardnumber,
-          'cardname' : cardname
+          'cardname': cardname
         },
         'userlocation': {
           'city': city,
@@ -41,5 +64,25 @@ class FirebaseServices {
     } catch (e) {
       print('Error signing up: $e');
     }
+  }
+}
+
+class ImageUrlGetter {
+  static firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  static uploadImage(
+      {required image,
+      required String Firstname,
+      required String Lastname}) async {
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref('${Firstname} ${Lastname}/Images');
+
+    firebase_storage.UploadTask uploadTask = ref.putFile(image);
+    // Wait for the upload to complete
+    firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
+
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    print(downloadUrl);
   }
 }

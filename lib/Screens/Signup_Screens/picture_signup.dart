@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/check_picture_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
+import 'package:food_delivery_app/Services/firebase_services.dart';
 import 'package:food_delivery_app/main.dart';
 
 import 'package:flutter/material.dart';
@@ -25,7 +27,8 @@ class _PaymentSignUpState extends State<PictureSignUp> {
 
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
     setState(() {
       selectedimage = File(image!.path);
     });
@@ -136,17 +139,19 @@ class _PaymentSignUpState extends State<PictureSignUp> {
                         height: screenHeight * 0.130,
                       ),
                       selectedimage != null
-                          ? Container(
-                              height: screenHeight * 0.160,
-                              width: screenWidth * .9,
-                              decoration: BoxDecoration(
-                                  color: WhiteandBlack,
-                                  borderRadius: BorderRadius.circular(
-                                      screenHeight * 0.025)),
-                              child: Image.file(
-                                selectedimage!.absolute,
-                                fit: BoxFit.cover,
-                              ))
+                          ? Center(
+                              child: Container(
+                                  height: screenHeight * 0.250,
+                                  width: screenWidth * .8,
+                                  decoration: BoxDecoration(
+                                      color: WhiteandBlack,
+                                      borderRadius: BorderRadius.circular(
+                                          screenHeight * 0.025)),
+                                  child: Image.file(
+                                    selectedimage!.absolute,
+                                    fit: BoxFit.contain,
+                                  )),
+                            )
                           : GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -212,7 +217,7 @@ class _PaymentSignUpState extends State<PictureSignUp> {
                             : Text(''),
                       ),
                       SizedBox(
-                        height: screenHeight * .2,
+                        height: screenHeight * 0.100,
                       ),
                       Center(
                         child: InkWell(

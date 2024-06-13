@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import this for TextInputFormatter
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 
-// ignore: non_constant_identifier_names
 int? cardnumber;
 int? cvvNumber;
-
 String? expiryDate;
 
 // Controllers
@@ -13,89 +11,78 @@ final TextEditingController cardNumberController = TextEditingController();
 final TextEditingController expiryDateController = TextEditingController();
 final TextEditingController cvvController = TextEditingController();
 
-// ignore: must_be_immutable
 class PaymentDialog extends StatefulWidget {
-  String? Cardname;
+  final String? cardName;
 
-  PaymentDialog({super.key, required this.Cardname});
+  PaymentDialog({super.key, required this.cardName});
 
   @override
   State<PaymentDialog> createState() => _PaymentDialogState();
 }
 
 class _PaymentDialogState extends State<PaymentDialog> {
-  // Custom formatter to add space after every 4 digits and limit length to 19 characters (16 digits + 3 spaces)
+  bool isError = false;
+
   final cardNumberSpaceFormatter = TextInputFormatter.withFunction(
     (oldValue, newValue) {
-      if (newValue!.text.length > oldValue!.text.length) {
-        if (newValue.text.length == 5 ||
-            newValue.text.length == 10 ||
-            newValue.text.length == 15) {
-          final newText =
-              '${oldValue.text} ${newValue.text.substring(newValue.text.length - 1)}';
-          return TextEditingValue(
-            text: newText,
-            selection: TextSelection.collapsed(offset: newText.length),
-          );
-        }
+      final text = newValue.text.replaceAll(' ', '');
+      final buffer = StringBuffer();
+      for (int i = 0; i < text.length; i++) {
+        if (i % 4 == 0 && i != 0) buffer.write(' ');
+        buffer.write(text[i]);
       }
-      return newValue;
+      return TextEditingValue(
+        text: buffer.toString(),
+        selection: TextSelection.collapsed(offset: buffer.length),
+      );
     },
   );
 
-  // Custom formatter to format expiry date in "MM/YY" format and limit length to 5 characters
   final expiryDateCustomFormatter = TextInputFormatter.withFunction(
     (oldValue, newValue) {
-      if (newValue!.text.length > oldValue!.text.length) {
-        if (newValue.text.length == 2) {
-          final newText = '${newValue.text}/'; // Add slash after 2 characters
-          return TextEditingValue(
-            text: newText,
-            selection: TextSelection.collapsed(offset: newText.length),
-          );
-        }
+      final text = newValue.text;
+      if (text.length == 2 && oldValue.text.length == 1) {
+        return TextEditingValue(
+          text: '$text/',
+          selection: TextSelection.collapsed(offset: 3),
+        );
       }
       return newValue;
     },
   );
 
   void validateCardNumber() {
-    String cardNumberStr = cardNumberController.text;
-    if (cardNumberStr.length != 19) {
+    final cardNumberStr = cardNumberController.text.replaceAll(' ', '');
+    if (cardNumberStr.length != 16) {
       setState(() {
         isError = true;
       });
-    } else {
-      try {
-        cardnumber = int.parse(cardNumberStr.split(' ').join(''));
-      } catch (e) {
-        setState(() {
-          isError = true;
-        });
-      }
+      return;
     }
 
-    String cvvStr = cvvController.text;
-    if (cvvStr.length > 3 || cvvStr.length < 3) {
+    try {
+      cardnumber = int.parse(cardNumberStr);
+    } catch (e) {
       setState(() {
         isError = true;
       });
-    } else if (cvvStr.length == 3) {
-      try {
-        cvvNumber = int.parse(cvvStr);
-      } catch (e) {
-        setState(() {
-          isError = true;
-        });
-      }
-    } else {
-      try {
-        cvvNumber = int.parse(cvvStr);
-      } catch (e) {
-        setState(() {
-          isError = true;
-        });
-      }
+      return;
+    }
+
+    final cvvStr = cvvController.text;
+    if (cvvStr.length != 3) {
+      setState(() {
+        isError = true;
+      });
+      return;
+    }
+
+    try {
+      cvvNumber = int.parse(cvvStr);
+    } catch (e) {
+      setState(() {
+        isError = true;
+      });
     }
   }
 
@@ -103,7 +90,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        "Enter Your ${widget.Cardname} Card Details",
+        "Enter Your ${widget.cardName} Card Details",
         style: const TextStyle(
           fontFamily: 'Poppins_SemiBold',
           fontWeight: FontWeight.bold,
@@ -117,7 +104,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
             controller: cardNumberController,
             keyboardType: TextInputType.number,
             inputFormatters: [cardNumberSpaceFormatter],
-            maxLength: 19, // Limit to 16 digits and 3 spaces
+            maxLength: 19,
             decoration: const InputDecoration(
               hintText: "Card Number",
             ),
@@ -127,13 +114,10 @@ class _PaymentDialogState extends State<PaymentDialog> {
             children: <Widget>[
               Expanded(
                 child: TextField(
-                  onChanged: (String value) {
-                    value = expiryDate!;
-                  },
                   controller: expiryDateController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [expiryDateCustomFormatter],
-                  maxLength: 5, // Limit to 5 characters (MM/YY format)
+                  maxLength: 5,
                   decoration: const InputDecoration(
                     hintText: "(MM/YY)",
                   ),
@@ -171,7 +155,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
             });
             validateCardNumber();
 
-            Navigator.of(context).pop();
+            if (!isError) {
+              Navigator.of(context).pop();
+            }
           },
         ),
         TextButton(

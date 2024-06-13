@@ -133,7 +133,7 @@ class _PaymentSignUpState extends State<PaymentSignUp> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return PaymentDialog(
-                                          Cardname:
+                                          cardName:
                                               payments_name[selected_index!],
                                         );
                                       },
@@ -201,13 +201,16 @@ class _PaymentSignUpState extends State<PaymentSignUp> {
                                 cardnumber != null) {
                               setState(() {
                                 cardname = payments_name[selected_index!];
+                                print(cardnumber);
+                                print(cvvNumber);
+                                print(expiryDate);
                               });
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: PictureSignUp(),
-                                      duration: const Duration(seconds: 1)));
+                              // Navigator.pushReplacement(
+                              //     context,
+                              //     PageTransition(
+                              //         type: PageTransitionType.fade,
+                              //         child: PictureSignUp(),
+                              //         duration: const Duration(seconds: 1)));
                             }
                           },
                           child: Container(

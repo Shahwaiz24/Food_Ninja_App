@@ -215,7 +215,10 @@ class _PaymentSignUpState extends State<SetLocationSignUp> {
                                     City: final_City, Country: final_Country);
 
                             if (validation == 'All Good') {
-                              
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfileReady()));
                             } else {
                               print(validation);
                             }

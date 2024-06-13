@@ -97,7 +97,9 @@ class _ProfileReadyState extends State<ProfileReady> {
     // Responsives Designs //
     final double buttonFontSize = screenWidth * 0.05;
     return StreamBuilder(
-        stream: FirebaseServices.databaseRef.child(userSignInPass.toString()).onValue,
+        stream: FirebaseServices.databaseRef
+            .child(userSignInPass.toString())
+            .onValue,
         builder: (context, AsyncSnapshot snapshot) {
           if (isloading == true) {
             return Scaffold(
