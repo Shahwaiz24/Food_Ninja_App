@@ -5,7 +5,6 @@ import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:food_delivery_app/Screens/search_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -121,11 +120,9 @@ class _MenuPageState extends State<MenuPage> {
                                       onTap: () {
                                         Navigator.push(
                                             context,
-                                            PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child: SearchPage(),
-                                                duration:
-                                                    Duration(seconds: 1)));
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchPage()));
                                       },
                                       child: Container(
                                         height: screenHeight * 0.059,
@@ -211,15 +208,12 @@ class _MenuPageState extends State<MenuPage> {
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                             context,
-                                            PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child: ProductScreen(
-                                                  index: index,
-                                                ),
-                                                duration: const Duration(
-                                                    seconds: 1)));
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductScreen(
+                                                        index: index)));
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.only(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmOrder extends StatefulWidget {
@@ -62,12 +61,9 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     setState(() {
                       removedataofcart();
                     });
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const HomePage(),
-                            duration: const Duration(seconds: 1)));
+                   Navigator.pushReplacement(
+                                  context,
+                              MaterialPageRoute(builder: (context) => HomePage()));
                   },
                 ),
               ),

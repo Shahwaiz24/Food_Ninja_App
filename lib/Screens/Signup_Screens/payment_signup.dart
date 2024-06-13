@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 bool isError = false;
 String? cardname;
 

@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/initial_page/first_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> checkUserLoggedIn() async {
@@ -34,19 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isLoggedIn) {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context,
-          PageTransition(
-              type: PageTransitionType.fade,
-              child: const HomePage(),
-              duration: const Duration(seconds: 1)));
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     } else {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context,
-          PageTransition(
-              type: PageTransitionType.fade,
-              child: const FirstPage(),
-              duration: const Duration(seconds: 1)));
+          context, MaterialPageRoute(builder: (context) => FirstPage()));
     }
   }
 

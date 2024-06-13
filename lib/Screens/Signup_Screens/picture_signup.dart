@@ -1,14 +1,10 @@
 import 'dart:io';
 
-import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/check_picture_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
-import 'package:food_delivery_app/Services/firebase_services.dart';
 import 'package:food_delivery_app/main.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:page_transition/page_transition.dart';
 
 bool isError = false;
 File? selectedimage;
@@ -225,10 +221,9 @@ class _PaymentSignUpState extends State<PictureSignUp> {
                             if (selectedimage != null) {
                               Navigator.pushReplacement(
                                   context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: SetLocationSignUp(),
-                                      duration: const Duration(seconds: 1)));
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SetLocationSignUp()));
                             } else {
                               setState(() {
                                 isError = true;

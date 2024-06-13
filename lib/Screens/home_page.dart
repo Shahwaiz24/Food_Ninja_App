@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Customwidget/slider.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
-import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Screens/menu_page.dart';
 import 'package:food_delivery_app/Screens/resturants_page.dart';
 import 'package:food_delivery_app/Screens/search_page.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Its an Home Page of Our Application //
@@ -172,11 +170,9 @@ class _HomePageState extends State<HomePage> {
                                       onTap: () {
                                         Navigator.push(
                                             context,
-                                            PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child: SearchPage(),
-                                                duration:
-                                                    Duration(seconds: 1)));
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchPage()));
                                       },
                                       child: Container(
                                         height: screenHeight * 0.059,
@@ -371,13 +367,9 @@ class _HomePageState extends State<HomePage> {
                                           right: screenWidth * 0.026),
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  child: ResturantPage(),
-                                                  duration:
-                                                      Duration(seconds: 1)));
+                                         Navigator.push(
+                                  context,
+                              MaterialPageRoute(builder: (context) => ResturantPage() ));
                                         },
                                         child: Text(
                                           'View More',
@@ -417,13 +409,9 @@ class _HomePageState extends State<HomePage> {
                                           right: screenWidth * 0.026),
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  child: MenuPage(),
-                                                  duration:
-                                                      Duration(seconds: 1)));
+                                          Navigator.pushReplacement(
+                                  context,
+                              MaterialPageRoute(builder: (context) => MenuPage()));
                                         },
                                         child: Text(
                                           'View More',

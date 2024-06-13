@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food_delivery_app/Screens/Resturant_Screens/resturant_screen.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class Slide extends StatefulWidget {
   const Slide({super.key});
@@ -41,12 +40,8 @@ class _SlideState extends State<Slide> {
               onTap: () {
                 Navigator.push(
                     context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: ResturantScreen(
-                          index: index,
-                        ),
-                        duration: const Duration(seconds: 1)));
+                    MaterialPageRoute(
+                        builder: (context) => ResturantScreen(index: index)));
               },
               child: Container(
                 height: screenHeight * .5,

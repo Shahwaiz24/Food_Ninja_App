@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({Key? key});
@@ -98,11 +97,8 @@ class SecondPage extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.pushReplacement(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const LoginScreen(),
-                                duration: const Duration(seconds: 1)));
+                                  context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       child: Container(
                         height: buttonHeigth,

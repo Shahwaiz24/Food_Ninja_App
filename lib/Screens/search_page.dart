@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Customwidget/no_data_search.dart';
 import 'package:food_delivery_app/Screens/Product_Screen/product_screen.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:page_transition/page_transition.dart';
 
 String? searchdata = '';
 String? usersearching;
@@ -194,16 +191,9 @@ class _SearchPageState extends State<SearchPage> {
                                             setState(() {
                                               searchController.clear();
                                             });
-                                            Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child: ProductScreen(
-                                                      index: Index,
-                                                    ),
-                                                    duration: const Duration(
-                                                        seconds: 1)));
+                                           Navigator.pushReplacement(
+                                  context,
+                              MaterialPageRoute(builder: (context) => ProductScreen(index: index)));
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.only(
@@ -311,16 +301,9 @@ class _SearchPageState extends State<SearchPage> {
                                             setState(() {
                                               searchController.clear();
                                             });
-                                            Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child: ProductScreen(
-                                                      index: index,
-                                                    ),
-                                                    duration: const Duration(
-                                                        seconds: 1)));
+                                             Navigator.pushReplacement(
+                                  context,
+                              MaterialPageRoute(builder: (context) => ProductScreen(index: index)));
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.only(

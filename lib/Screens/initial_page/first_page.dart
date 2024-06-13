@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/initial_page/second_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key});
@@ -99,10 +98,8 @@ class FirstPage extends StatelessWidget {
                       onTap: () {
                         Navigator.pushReplacement(
                             context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const SecondPage(),
-                                duration: const Duration(seconds: 1)));
+                            MaterialPageRoute(
+                                builder: (context) => SecondPage()));
                       },
                       child: Container(
                         height: buttonHeigth,

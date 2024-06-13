@@ -5,7 +5,6 @@ import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:food_delivery_app/Screens/profile_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
@@ -32,12 +31,8 @@ class BottomNavigation extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: const HomePage(),
-                          duration: const Duration(seconds: 1)));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 child: Container(
                   width: 112,
@@ -74,12 +69,8 @@ class BottomNavigation extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: ProfilePage(),
-                            duration: const Duration(seconds: 1)));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()));
                   },
                   icon: Icon(
                     Icons.person,
@@ -90,10 +81,8 @@ class BottomNavigation extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                       context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: OrderDetailsScreen(),
-                          duration: const Duration(seconds: 1)));
+                      MaterialPageRoute(
+                          builder: (context) => OrderDetailsScreen()));
                 },
                 child: Center(
                     child: badges.Badge(

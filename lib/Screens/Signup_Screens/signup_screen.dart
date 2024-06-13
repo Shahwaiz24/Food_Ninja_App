@@ -1,10 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 // Final Assigned Values //
 String userSignInEmail = '';
@@ -62,11 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userSignInPass = userpass;
         userSignInUsername = username!;
         Navigator.pushReplacement(
-            context,
-            PageTransition(
-                type: PageTransitionType.fade,
-                child: BioSignUp(),
-                duration: const Duration(seconds: 1)));
+            context, MaterialPageRoute(builder: (context) => BioSignUp()));
       }
     }
 
@@ -590,10 +584,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () {
                         Navigator.pushReplacement(
                             context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const LoginScreen(),
-                                duration: const Duration(seconds: 1)));
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
                       },
                       child: Text(
                         'already have an account?',
@@ -612,13 +604,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-// Responsives Designs //
-// final Size screenSize = MediaQuery.of(context).size;
-// final double screenHeight = screenSize.height;
-// final double screenWidth = screenSize.width;
-
-// final double titleFontSize = screenWidth * 0.06;
-// final double buttonFontSize = screenWidth * 0.04;
-// final double descriptiveFontsize = screenWidth * 0.04;
-// final double logoTitleFontsize = screenWidth * 0.1;

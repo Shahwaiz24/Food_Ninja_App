@@ -3,7 +3,6 @@ import 'package:food_delivery_app/Customwidget/custom_list_view.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/Screens/menu_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ResturantContent extends StatefulWidget {
   final int index_;
@@ -156,10 +155,8 @@ class _ResturantContentState extends State<ResturantContent> {
                       onPressed: () {
                         Navigator.push(
                             context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const MenuPage(),
-                                duration: const Duration(seconds: 1)));
+                            MaterialPageRoute(
+                                builder: (context) => MenuPage()));
                       },
                       child: Text(
                         'View More',
@@ -180,12 +177,8 @@ class _ResturantContentState extends State<ResturantContent> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const MenuPage(),
-                              duration: const Duration(seconds: 1)));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MenuPage()));
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15.0),

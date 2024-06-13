@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/Cart_Screens/confirm_order.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int subtotalPrice = 0;
@@ -196,11 +194,8 @@ class _CheckOutState extends State<CheckOut> {
                 InkWell(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const ConfirmOrder(),
-                            duration: const Duration(seconds: 1)));
+                                  context,
+                              MaterialPageRoute(builder: (context) =>ConfirmOrder() ));
                   },
                   child: Container(
                     height: buttonHeigth,

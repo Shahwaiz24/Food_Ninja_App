@@ -1,13 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Screens/profile_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Its an Custom Bottom Sheet for Display the User Information to Page//
@@ -141,12 +138,9 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                     IconButton(
                       onPressed: () {
                         logoutuser();
-                        Navigator.pushReplacement(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: LoginScreen(),
-                                duration: const Duration(seconds: 1)));
+                       Navigator.pushReplacement(
+                                  context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       icon: Icon(
                         Icons.exit_to_app,

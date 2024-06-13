@@ -3,8 +3,6 @@ import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 import 'package:food_delivery_app/Services/validation_service.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
-
 // Final Bio Values //
 String userSignInFirstName = '';
 String userSignInLastName = '';

@@ -3,7 +3,6 @@ import 'package:food_delivery_app/Screens/Resturant_Screens/resturant_screen.dar
 
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
 
 // Its a Custom Widget For Display Grid View //
 
@@ -31,12 +30,8 @@ class CustomGridView extends StatelessWidget {
           onTap: () {
             Navigator.push(
                 context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: ResturantScreen(
-                      index: index,
-                    ),
-                    duration: const Duration(seconds: 1)));
+                MaterialPageRoute(
+                    builder: (context) => ResturantScreen(index: index)));
           },
           child: Padding(
             padding: EdgeInsets.only(

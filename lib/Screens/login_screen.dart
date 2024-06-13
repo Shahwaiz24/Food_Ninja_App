@@ -1,38 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:page_transition/page_transition.dart';
-
-// Functions //
-void showCustomSnackBar(BuildContext context, {required String message}) {
-  final snackBar = SnackBar(
-    content: Row(
-      children: [
-        const Icon(
-          Icons.error,
-          color: Colors.red,
-          size: 26,
-        ),
-        const SizedBox(
-          width: 6,
-        ),
-        Text(
-          message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontFamily: 'Poppins_SemiBold',
-          ),
-        ),
-      ],
-    ),
-    backgroundColor: linearGreen,
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
 
 Map<String, dynamic> user_details = {};
 bool isuser = false;
@@ -432,10 +402,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                                 context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: const HomePage(),
-                                    duration: const Duration(seconds: 1)));
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
                           }
                         }
                         if (login_password!.length < 8 &&
@@ -514,10 +482,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.pushReplacement(
                               context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: const SignUpScreen(),
-                                  duration: const Duration(seconds: 1)));
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpScreen()));
                         },
                         child: Text(
                           'Create An Account?',
