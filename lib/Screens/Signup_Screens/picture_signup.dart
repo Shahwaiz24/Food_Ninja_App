@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:food_delivery_app/Screens/Signup_Screens/check_picture_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
 import 'package:food_delivery_app/main.dart';
@@ -7,8 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 
 bool isError = false;
-
-XFile? selectedimage;
+File? selectedimage;
 
 final picker = ImagePicker();
 
@@ -26,7 +27,7 @@ class _PaymentSignUpState extends State<PictureSignUp> {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
-      selectedimage = image;
+      selectedimage = File(image!.path);
     });
   }
 
@@ -134,43 +135,55 @@ class _PaymentSignUpState extends State<PictureSignUp> {
                       SizedBox(
                         height: screenHeight * 0.130,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isError = false;
-                          });
-                          _pickImage();
-                        },
-                        child: Container(
-                          height: screenHeight * 0.160,
-                          width: screenWidth * .9,
-                          decoration: BoxDecoration(
-                              color: WhiteandBlack,
-                              borderRadius:
-                                  BorderRadius.circular(screenHeight * 0.025)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/Gallery_Icon.png'),
-                                height: screenHeight * 0.1,
-                                width: screenWidth * 0.2,
+                      selectedimage != null
+                          ? Container(
+                              height: screenHeight * 0.160,
+                              width: screenWidth * .9,
+                              decoration: BoxDecoration(
+                                  color: WhiteandBlack,
+                                  borderRadius: BorderRadius.circular(
+                                      screenHeight * 0.025)),
+                              child: Image.file(
+                                selectedimage!.absolute,
+                                fit: BoxFit.cover,
+                              ))
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isError = false;
+                                });
+                                _pickImage();
+                              },
+                              child: Container(
+                                height: screenHeight * 0.160,
+                                width: screenWidth * .9,
+                                decoration: BoxDecoration(
+                                    color: WhiteandBlack,
+                                    borderRadius: BorderRadius.circular(
+                                        screenHeight * 0.025)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                          'assets/images/Gallery_Icon.png'),
+                                      height: screenHeight * 0.1,
+                                      width: screenWidth * 0.2,
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                      "From Gallery",
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins_SemiBold',
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: screenHeight * 0.0205),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              Text(
-                                "From Gallery",
-                                style: TextStyle(
-                                    fontFamily: 'Poppins_SemiBold',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: screenHeight * 0.0205),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
                       Padding(
                         padding: EdgeInsets.only(
                             top: screenHeight * 0.020,
