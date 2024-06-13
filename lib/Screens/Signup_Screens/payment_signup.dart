@@ -125,6 +125,9 @@ class _PaymentSignUpState extends State<PaymentSignUp> {
                                 onTap: () {
                                   setState(() {
                                     selected_index = index;
+                                    cardNumberController.clear();
+                                    expiryDateController.clear();
+                                    cvvController.clear();
 
                                     showDialog(
                                       context: context,

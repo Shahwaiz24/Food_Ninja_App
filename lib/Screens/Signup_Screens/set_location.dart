@@ -215,7 +215,7 @@ class _PaymentSignUpState extends State<SetLocationSignUp> {
                                     City: final_City, Country: final_Country);
 
                             if (validation == 'All Good') {
-                              print(validation);
+                              
                             } else {
                               print(validation);
                             }

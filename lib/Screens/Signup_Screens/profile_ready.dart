@@ -2,53 +2,22 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/get_location.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:food_delivery_app/Services/firebase_services.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'bio_signup.dart';
-import "package:firebase_auth/firebase_auth.dart";
 
-final auth = FirebaseAuth.instance;
 bool isloading = true;
-final databaseRef = FirebaseDatabase.instance.ref('Users DataBase');
 Map<String, dynamic> savedDetails = {};
 Map<dynamic, dynamic> userDetails = {};
-
-// Function To Sign Up User
-Future<void> signup() async {
-  try {
-    await auth.createUserWithEmailAndPassword(
-        email: userSignInEmail.toString(), password: userSignInPass.toString());
-
-    // ignore: unnecessary_string_interpolations
-    await databaseRef.child("$userSignInPass").set({
-      'username': userSignInUsername,
-      'useremail': userSignInEmail,
-      'userpassword': userSignInPass,
-      'userfirstname': userSignInFirstName,
-      'userlastname': userSignInLastName,
-      'usermobilenumber': userSignInNumber,
-      'userpaymentmethod': {
-        'expirydate': expiryDate,
-        'cvv': cvvNumber,
-        'cardnumber': cardnumber,
-      },
-      'profilepicture': selectedimage.toString(),
-      'userlocation': {
-        'city': city,
-        'street': street,
-      }
-    });
-  } catch (e) {
-    print('Error signing up: $e');
-  }
-}
 
 // Function to save map to SharedPreferences
 Future<void> saveuserdata(
@@ -89,7 +58,20 @@ class _ProfileReadyState extends State<ProfileReady> {
     // Start the timer
     _stopwatch.start();
     // Call the async function
-    signup().then((_) {
+    FirebaseServices.signUp_User(
+            userSignInEmail: userSignInEmail,
+            userSignInFirstName: userSignInFirstName,
+            userSignInLastName: userSignInLastName,
+            userSignInNumber: userSignInNumber,
+            userSignInPass: userSignInPass,
+            userSignInUsername: userSignInUsername,
+            expiryDate: expiryDate,
+            city: final_City,
+            country: final_Country,
+            cvvNumber: cvvNumber,
+            cardnumber: cardnumber,
+            cardname: cardname)
+        .then((_) {
       // When the async function completes, stop the timer
       _stopwatch.stop();
       // Set isLoading to false once data loading is complete
@@ -115,7 +97,7 @@ class _ProfileReadyState extends State<ProfileReady> {
     // Responsives Designs //
     final double buttonFontSize = screenWidth * 0.05;
     return StreamBuilder(
-        stream: databaseRef.child(userSignInPass.toString()).onValue,
+        stream: FirebaseServices.databaseRef.child(userSignInPass.toString()).onValue,
         builder: (context, AsyncSnapshot snapshot) {
           if (isloading == true) {
             return Scaffold(
