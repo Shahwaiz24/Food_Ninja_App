@@ -33,9 +33,9 @@ class LocalStorage {
 
         return user_data = data;
       }
-    } else {
-      saveuserdata(key: 'user_details', data: userDetails);
-      fetchuserdata(key: 'user_details');
+    } else  {
+     await saveuserdata(key: 'user_details', data: userDetails);
+     await fetchuserdata(key: 'user_details');
     }
   }
 
