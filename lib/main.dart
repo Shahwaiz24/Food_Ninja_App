@@ -12,7 +12,7 @@ Color Lightorange = const Color(0xffF9A84D);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  LocalStorage.initialize;
+ await LocalStorage.initialize;
   runApp(const MyApp());
 }
 

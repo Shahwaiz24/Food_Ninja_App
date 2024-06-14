@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
+import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Services/firebase_services.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'bio_signup.dart';
 
 bool isloading = true;
-
 
 class ProfileReady extends StatefulWidget {
   const ProfileReady({super.key});
@@ -158,14 +157,13 @@ class _ProfileReadyState extends State<ProfileReady> {
                           Padding(
                             padding: EdgeInsets.only(bottom: screenHeight * .1),
                             child: InkWell(
-                              onTap: () {
-                                // setUserLoggedIn();
-                                // Navigator.pushReplacement(
-                                //     context,
-                                //     PageTransition(
-                                //         type: PageTransitionType.fade,
-                                //         child: HomePage(),
-                                //         duration: const Duration(seconds: 1)));
+                              onTap: () async {
+                                await LocalStorage.setUserLoggedIn();
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePage()));
                               },
                               child: Container(
                                 height: screenHeight * 0.07,

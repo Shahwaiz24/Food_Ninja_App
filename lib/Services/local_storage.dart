@@ -11,6 +11,7 @@ class LocalStorage {
 
   static Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
+    print('Initialized');
   }
 
   static Future<void> setUserLoggedIn() async {
@@ -33,9 +34,9 @@ class LocalStorage {
 
         return user_data = data;
       }
-    } else  {
-     await saveuserdata(key: 'user_details', data: userDetails);
-     await fetchuserdata(key: 'user_details');
+    } else {
+      await saveuserdata(key: 'user_details', data: userDetails);
+      await fetchuserdata(key: 'user_details');
     }
   }
 
