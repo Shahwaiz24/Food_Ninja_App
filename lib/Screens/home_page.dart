@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Customwidget/slider.dart';
+import 'package:food_delivery_app/Screens/Product_Screen/product_screen.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
+import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/Screens/menu_page.dart';
 import 'package:food_delivery_app/Screens/resturants_page.dart';
 import 'package:food_delivery_app/Screens/search_page.dart';
@@ -210,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           child: Center(
                                             child: Image(
-                                              image: AssetImage(
+                                              image: const AssetImage(
                                                   "assets/images/Filter_Icon.png"),
                                               height: screenHeight * 0.060,
                                               width: screenWidth * 0.060,
@@ -375,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            ResturantPage()));
+                                                            const ResturantPage()));
                                               },
                                               child: Text(
                                                 'View More',
@@ -395,7 +397,7 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(
                                       height: screenHeight * 0.030,
                                     ),
-                                    Slide(),
+                                    const Slide(),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: screenWidth * 0.020,
@@ -410,7 +412,7 @@ class _HomePageState extends State<HomePage> {
                                               fontSize: screenHeight * 0.025,
                                             ),
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 right: screenWidth * 0.026),
@@ -437,147 +439,138 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: screenHeight * 0.018),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: screenWidth * 0.020),
-                                      child: Container(
-                                        height: screenHeight * 0.130,
-                                        width: screenWidth * 0.850,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            color: WhiteandBlack),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: screenWidth * 0.020,
-                                              top: screenHeight * 0.010,
-                                              right: screenWidth * 0.020,
-                                              bottom: screenHeight * 0.020),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                height: screenHeight * 0.090,
-                                                width: screenWidth * 0.170,
+                                    ListView.builder(
+                                        itemCount: MenuName.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: screenWidth * 0.020,
+                                                right: screenWidth * 0.060,
+                                                bottom: screenHeight * 0.030),
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductScreen(
+                                                                index: index)));
+                                              },
+                                              child: Container(
+                                                height: screenHeight * 0.130,
+                                                width: screenWidth * 0.850,
                                                 decoration: BoxDecoration(
-                                                  image: const DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/images/MenuImage/Menu_Photo_3.jpg'),
-                                                      fit: BoxFit.cover),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: screenWidth * 0.070,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 05),
-                                                child: Text(
-                                                  'Green Noodle',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'Poppins_SemiBold',
-                                                      fontSize:
-                                                          screenHeight * 0.020,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: screenWidth * 0.020,
-                                                    bottom: 05),
-                                                child: Text(
-                                                  '15\$',
-                                                  style: TextStyle(
-                                                    color: Lightorange,
-                                                    fontSize:
-                                                        screenHeight * 0.030,
-                                                    fontWeight: FontWeight.w600,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    color: WhiteandBlack),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: screenWidth * 0.020,
+                                                      top: screenHeight * 0.010,
+                                                      right:
+                                                          screenWidth * 0.020,
+                                                      bottom:
+                                                          screenHeight * 0.020),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        height: screenHeight *
+                                                            0.090,
+                                                        width:
+                                                            screenWidth * 0.170,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  Menu_Photos[
+                                                                      index]),
+                                                              fit:
+                                                                  BoxFit.cover),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(15),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            screenWidth * 0.070,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 05),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              MenuName[index],
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins_SemiBold',
+                                                                  fontSize:
+                                                                      screenHeight *
+                                                                          0.020,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900),
+                                                            ),
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight *
+                                                                      0.003,
+                                                            ),
+                                                            Text(
+                                                              MenuName[index],
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins_Regular',
+                                                                  fontSize:
+                                                                      screenHeight *
+                                                                          0.018,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(
+                                                            right: screenWidth *
+                                                                0.020,
+                                                            bottom: 05),
+                                                        child: Text(
+                                                          '${Prices[index]}\$',
+                                                          style: TextStyle(
+                                                            color: Lightorange,
+                                                            fontSize:
+                                                                screenHeight *
+                                                                    0.030,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: screenHeight * 0.018),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: screenWidth * 0.020),
-                                      child: Container(
-                                        height: screenHeight * 0.130,
-                                        width: screenWidth * 0.850,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            color: WhiteandBlack),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: screenWidth * 0.020,
-                                              top: screenHeight * 0.010,
-                                              right: screenWidth * 0.020,
-                                              bottom: screenHeight * 0.020),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                height: screenHeight * 0.090,
-                                                width: screenWidth * 0.170,
-                                                decoration: BoxDecoration(
-                                                  image: const DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/images/MenuImage/Menu_Photo_2.jpg'),
-                                                      fit: BoxFit.cover),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
                                               ),
-                                              SizedBox(
-                                                width: screenWidth * 0.070,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 05),
-                                                child: Text(
-                                                  'Herbal Pancake',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'Poppins_SemiBold',
-                                                      fontSize:
-                                                          screenHeight * 0.020,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: screenWidth * 0.020,
-                                                    bottom: 05),
-                                                child: Text(
-                                                  '15\$',
-                                                  style: TextStyle(
-                                                    color: Lightorange,
-                                                    fontSize:
-                                                        screenHeight * 0.030,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                            ),
+                                          );
+                                        }),
+                                    Container(
+                                      height: screenHeight * 0.130,
+                                      width: screenWidth * 0.850,
                                     )
                                   ],
                                 ),

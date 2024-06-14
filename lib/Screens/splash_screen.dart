@@ -3,16 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/initial_page/first_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-Future<bool> checkUserLoggedIn() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  bool? isLoggedIn = prefs.getBool('isLoggedIn');
-
-  return isLoggedIn ?? false;
-}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -26,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> mainAsync() async {
     // Call checkUserLoggedIn() to get the login status
-    bool isLoggedIn = await checkUserLoggedIn();
+    bool isLoggedIn = await LocalStorage.checkUserLoggedIn();
 
     // Now you can use the isLoggedIn variable
     if (isLoggedIn) {
@@ -43,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     Timer(const Duration(seconds: 3), () {
       mainAsync();
     });
