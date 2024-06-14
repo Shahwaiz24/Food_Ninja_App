@@ -1,44 +1,16 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Services/firebase_services.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'bio_signup.dart';
 
 bool isloading = true;
-Map<String, dynamic> savedDetails = {};
-Map<dynamic, dynamic> userDetails = {};
 
-// Function to save map to SharedPreferences
-Future<void> saveuserdata(
-    {required String key, required Map<dynamic, dynamic> data}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // Convert map to JSON string
-  String jsonString = jsonEncode(data);
-  // Save JSON string to SharedPreferences
-  await prefs.setString(key, jsonString);
-}
-
-// Function to Get Data of User //
-Future<Map<dynamic, dynamic>?> fetchuserdata({required String key}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? jsonString = prefs.getString(key);
-  if (jsonString != null) {
-    savedDetails = jsonDecode(jsonString);
-
-    return user_data = savedDetails;
-  } else {
-    // If no data found, return null
-    return null;
-  }
-}
-// Function end //
 
 class ProfileReady extends StatefulWidget {
   const ProfileReady({super.key});

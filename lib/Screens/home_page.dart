@@ -6,6 +6,7 @@ import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
 import 'package:food_delivery_app/Screens/menu_page.dart';
 import 'package:food_delivery_app/Screens/resturants_page.dart';
 import 'package:food_delivery_app/Screens/search_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,36 +18,9 @@ Map<dynamic, dynamic> user_data = {};
 
 // Function to SET USER lOGIN IN //
 
-Future<void> setUserLoggedIn() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isLoggedIn', true);
-}
-// Function to SET USER lOGIN OUT //
 
-Future<void> setUserLoggedOut() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isLoggedIn', false);
-}
 
-Future<dynamic> isDataSaved({required String key}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  // Check if the key exists in SharedPreferences
-  if (prefs.containsKey(key)) {
-    // Retrieve the data associated with the key
-    String? jsonString = prefs.getString(key);
-
-    if (jsonString != null) {
-      // Decode the JSON string into a Map<dynamic, dynamic>
-      Map<dynamic, dynamic> data = json.decode(jsonString);
-
-      return user_data = data;
-    }
-  } else {
-    saveuserdata(key: 'user_details', data: userDetails);
-    fetchuserdata(key: 'user_details');
-  }
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,8 +33,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    setUserLoggedIn();
-    isDataSaved(key: 'user_details');
+    LocalStorage.isDataSaved(key: 'user_details');
   }
 
   @override

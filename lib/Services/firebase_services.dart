@@ -9,6 +9,7 @@ import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
 class FirebaseServices {
   static final databaseRef = FirebaseDatabase.instance.ref('Users DataBase');
 
+  static var userImage;
 // Function To Sign Up User
   static signUp_User({
     required userSignInPass,
@@ -58,7 +59,8 @@ class FirebaseServices {
         'userlocation': {
           'city': city,
           'Country': country,
-        }
+        },
+        'userProfilePhoto': userImage
       });
     } catch (e) {
       print('Error signing up: $e');
@@ -83,5 +85,9 @@ class ImageUrlGetter {
 
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     print(downloadUrl);
+    if (downloadUrl != null) {
+      FirebaseServices.userImage = downloadUrl;
+      print(FirebaseServices.userImage);
+    }
   }
 }
