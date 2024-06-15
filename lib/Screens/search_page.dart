@@ -8,11 +8,12 @@ import 'package:badges/badges.dart' as badges;
 String? searchdata = '';
 String? usersearching;
 bool isError = false;
+bool is_searching = false;
 bool is_error = false;
 late int Index;
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key, key}) : super(key: key);
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -155,14 +156,16 @@ class _SearchPageState extends State<SearchPage> {
                                               Expanded(
                                                 child: TextField(
                                                   onChanged: (String? value) {
-                                                    setState(() {
-                                                      searchdata = value;
-                                                    });
-                                                    if (searchdata == null ||
-                                                        searchdata!.isEmpty) {
-                                                      setState(() {
+                                                    if (searchController.text ==
+                                                            null ||
                                                         searchController
-                                                            .clear();
+                                                            .text.isEmpty) {
+                                                      setState(() {
+                                                        is_searching = false;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        is_searching = true;
                                                       });
                                                     }
                                                   },
@@ -189,29 +192,158 @@ class _SearchPageState extends State<SearchPage> {
                                     ),
                                   ],
                                 ),
-                                ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: 4,
-                                    itemBuilder: (context, index) {
-                                      if (MenuName[index]
-                                          .toLowerCase()
-                                          .contains(searchController.text
+                                is_searching == true
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: MenuName.length,
+                                        itemBuilder: (context, index) {
+                                          if (MenuName[index]
                                               .toLowerCase()
-                                              .toString())) {
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              searchController.clear();
-                                            });
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ProductScreen(
-                                                            index: index)));
-                                          },
-                                          child: Padding(
+                                              .contains(searchController.text
+                                                  .toLowerCase())) {
+                                            return InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  searchController.clear();
+                                                  is_searching = false;
+                                                });
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductScreen(
+                                                                index: index)));
+                                              },
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  top: screenHeight * 0.020,
+                                                  right: screenWidth * 0.060,
+                                                ),
+                                                child: Container(
+                                                  height: screenHeight * 0.130,
+                                                  width: screenWidth * 0.100,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              35),
+                                                      color: WhiteandBlack),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right:
+                                                            screenWidth * 0.040,
+                                                        left: screenWidth *
+                                                            0.040),
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          height: screenHeight *
+                                                              0.090,
+                                                          width: screenWidth *
+                                                              0.170,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                              image: DecorationImage(
+                                                                  image: AssetImage(
+                                                                      Menu_Photos[
+                                                                          index]),
+                                                                  fit: BoxFit
+                                                                      .cover)),
+                                                        ),
+                                                        SizedBox(
+                                                          width: screenWidth *
+                                                              0.040,
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              MenuName[index],
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins_SemiBold',
+                                                                  fontSize:
+                                                                      screenHeight *
+                                                                          0.020,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900),
+                                                            ),
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight *
+                                                                      0.003,
+                                                            ),
+                                                            Text(
+                                                              MenuName[index],
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins_Regular',
+                                                                  fontSize:
+                                                                      screenHeight *
+                                                                          0.018,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        const Spacer(),
+                                                        Padding(
+                                                            padding: EdgeInsets.only(
+                                                                right:
+                                                                    screenWidth *
+                                                                        0.020),
+                                                            child: Text(
+                                                                '${Prices[index]}\$',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      Lightorange,
+                                                                  fontSize:
+                                                                      screenHeight *
+                                                                          0.030,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                )))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return SizedBox.shrink();
+                                          }
+                                        },
+                                      )
+                                    : ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: MenuName.length,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                searchController.clear();
+                                              });
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductScreen(
+                                                              index: index)));
+                                            },
+                                            child: Padding(
                                               padding: EdgeInsets.only(
                                                 top: screenHeight * 0.020,
                                                 right: screenWidth * 0.060,
@@ -313,123 +445,10 @@ class _SearchPageState extends State<SearchPage> {
                                                     ],
                                                   ),
                                                 ),
-                                              )),
-                                        );
-                                      } else if (searchController
-                                          .text.isEmpty) {
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              searchController.clear();
-                                            });
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ProductScreen(
-                                                            index: index)));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              top: screenHeight * 0.020,
-                                              right: screenWidth * 0.060,
-                                            ),
-                                            child: Container(
-                                              height: screenHeight * 0.130,
-                                              width: screenWidth * 0.100,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(35),
-                                                  color: WhiteandBlack),
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: screenWidth * 0.040,
-                                                    left: screenWidth * 0.040),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      height:
-                                                          screenHeight * 0.090,
-                                                      width:
-                                                          screenWidth * 0.170,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  Menu_Photos[
-                                                                      index]),
-                                                              fit: BoxFit
-                                                                  .cover)),
-                                                    ),
-                                                    SizedBox(
-                                                      width:
-                                                          screenWidth * 0.040,
-                                                    ),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          MenuName[index],
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'Poppins_SemiBold',
-                                                              fontSize:
-                                                                  screenHeight *
-                                                                      0.020,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w900),
-                                                        ),
-                                                        SizedBox(
-                                                          height: screenHeight *
-                                                              0.003,
-                                                        ),
-                                                        Text(
-                                                          MenuName[index],
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'Poppins_Regular',
-                                                              fontSize:
-                                                                  screenHeight *
-                                                                      0.018,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    const Spacer(),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(
-                                                            right: screenWidth *
-                                                                0.020),
-                                                        child: Text(
-                                                            '${Prices[index]}\$',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Lightorange,
-                                                              fontSize:
-                                                                  screenHeight *
-                                                                      0.030,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            )))
-                                                  ],
-                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      }
-                                    }),
+                                          );
+                                        }),
                                 Container(
                                   height: screenHeight * 0.130,
                                   width: screenWidth * 0.850,
