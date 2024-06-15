@@ -385,8 +385,8 @@ class _HomePageState extends State<HomePage> {
                                                   fontFamily: 'Poppins_Light',
                                                   color: Lightorange,
                                                   fontSize:
-                                                      screenHeight * 0.017,
-                                                  fontWeight: FontWeight.w200,
+                                                      screenHeight * 0.020,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                             ),
@@ -430,8 +430,8 @@ class _HomePageState extends State<HomePage> {
                                                   fontFamily: 'Poppins_Light',
                                                   color: Lightorange,
                                                   fontSize:
-                                                      screenHeight * 0.017,
-                                                  fontWeight: FontWeight.w200,
+                                                      screenHeight * 0.020,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                             ),
@@ -440,6 +440,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
                                         itemCount: MenuName.length,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {

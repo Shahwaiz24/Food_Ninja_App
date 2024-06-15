@@ -203,6 +203,7 @@ class _MenuPageState extends State<MenuPage> {
                                 height: screenHeight * 0.010,
                               ),
                               ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: MenuName.length,
                                   itemBuilder: (context, index) {
@@ -283,7 +284,6 @@ class _MenuPageState extends State<MenuPage> {
                                                     )
                                                   ],
                                                 ),
-                                              
                                                 const Spacer(),
                                                 Padding(
                                                     padding: EdgeInsets.only(
@@ -305,7 +305,11 @@ class _MenuPageState extends State<MenuPage> {
                                         ),
                                       ),
                                     );
-                                  })
+                                  }),
+                              Container(
+                                height: screenHeight * 0.130,
+                                width: screenWidth * 0.850,
+                              )
                             ],
                           ),
                         ),

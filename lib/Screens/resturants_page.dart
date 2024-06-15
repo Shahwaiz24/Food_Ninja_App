@@ -198,6 +198,10 @@ class _ResturantPageState extends State<ResturantPage> {
                       ],
                     ),
                     CustomGridView(),
+                    Container(
+                      height: screenHeight * 0.130,
+                      width: screenWidth * 0.850,
+                    )
                   ],
                 ),
               ),
