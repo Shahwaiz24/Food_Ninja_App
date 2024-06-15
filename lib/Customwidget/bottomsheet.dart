@@ -1,14 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
-import 'package:food_delivery_app/Screens/profile_page.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Its an Custom Bottom Sheet for Display the User Information to Page//
+
+// Favourite data List//
+List<Map<String, dynamic>> Favourite_data = [];
+bool hasFavourites = false;
+bool isloading = true;
+int? Index;
 
 class PersistentBottomSheet extends StatefulWidget {
   const PersistentBottomSheet({super.key});
@@ -18,62 +20,13 @@ class PersistentBottomSheet extends StatefulWidget {
 }
 
 class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
-  bool hasFavourites = false;
-  bool isloading = true;
-
-  // Function to Get the Favourite List //
-  List<Map<String, dynamic>> Favourite_data = [];
-
-  Future<void> retrivefavourites() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('My_Favourites');
-    if (jsonString != null) {
-      List<dynamic> decodedList = json.decode(jsonString);
-      List<Map<String, dynamic>> retrievedList =
-          decodedList.cast<Map<String, dynamic>>();
-      setState(() {
-        Favourite_data = retrievedList;
-      });
-      print('List retrieved from SharedPreferences: $Favourite_data');
-
-      if (Favourite_data == null || Favourite_data.isEmpty) {
-        hasFavourites = false;
-      } else if (Favourite_data != null || Favourite_data.isNotEmpty) {
-        hasFavourites = true;
-      }
-    } else {
-      print('No list found in SharedPreferences');
-    }
-  }
-
-  int? Index;
-// to delete the Favourite Item //
-  Future<void> deletefavourite({required Map keyToDelete}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('My_Favourites');
-    if (jsonString != null) {
-      List<dynamic> decodedList = json.decode(jsonString);
-      List<Map<String, dynamic>> existingList =
-          decodedList.cast<Map<String, dynamic>>();
-      existingList.remove(existingList[Index!]);
-
-      String updatedJsonString = json.encode(existingList);
-
-      await prefs.setString('My_Favourites', updatedJsonString);
-      print('Map deleted from SharedPreferences List');
-      print(updatedJsonString);
-    } else {
-      print('No list found in SharedPreferences');
-    }
-  }
-
   // It is For the Process Of Checking the Favourites//
   Stopwatch _stopwatch = Stopwatch();
   void startFavouritesprocess() {
     // Start the timer
     _stopwatch.start();
     // Call the async function
-    retrivefavourites().then((_) {
+   LocalStorage.retrivefavourites().then((_) {
       // When the async function completes, stop the timer
       _stopwatch.stop();
       // Set isLoading to false once data loading is complete
@@ -138,8 +91,8 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                     ),
                     Spacer(),
                     IconButton(
-                      onPressed: () async{
-                       await LocalStorage.logoutuser();
+                      onPressed: () async {
+                        await LocalStorage.logoutuser();
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -240,7 +193,6 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                         fontWeight: FontWeight.w700),
                   ),
                 ),
-
                 hasFavourites == true
                     ? ListView.builder(
                         itemCount: Favourite_data.length,
@@ -259,8 +211,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                                   color: Colors.grey.withOpacity(0.4),
                                   spreadRadius: 5,
                                   blurRadius: 8,
-                                  offset: Offset(
-                                      0, 3), 
+                                  offset: Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -325,15 +276,14 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                                   ),
                                   Spacer(),
                                   IconButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         setState(() {
                                           Index = index;
-
-                                          deletefavourite(
-                                              keyToDelete:
-                                                  Favourite_data[index]);
-                                          retrivefavourites();
                                         });
+
+                                        await LocalStorage.deletefavourite(
+                                            keyToDelete: Favourite_data[index]);
+                                        await LocalStorage.retrivefavourites();
                                       },
                                       icon: Icon(
                                         Icons.delete_outline_outlined,
