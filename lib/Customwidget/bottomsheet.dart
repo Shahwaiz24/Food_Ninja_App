@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Screens/profile_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,10 +98,11 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
     if (isloading == false) {
       return Container(
         padding: const EdgeInsets.all(16),
-        height: screenHeight * .5,
-        decoration: const BoxDecoration(
+        height: screenHeight * .6,
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius:
+              BorderRadius.vertical(top: Radius.circular(screenWidth * 0.080)),
         ),
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
@@ -136,11 +138,12 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                     ),
                     Spacer(),
                     IconButton(
-                      onPressed: () {
-                        logoutuser();
-                       Navigator.pushReplacement(
-                                  context,
-                              MaterialPageRoute(builder: (context) => LoginScreen()));
+                      onPressed: () async{
+                       await LocalStorage.logoutuser();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
                       },
                       icon: Icon(
                         Icons.exit_to_app,
@@ -151,7 +154,6 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                // Yahan apne bottom sheet ka content add karein
                 Row(
                   children: [
                     Column(
@@ -171,7 +173,6 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                           height: 3,
                         ),
                         Text(
-                          // 'shahwaiz@gmail.com',
                           user_data['useremail'],
                           style: TextStyle(
                               color: Colors.grey,
@@ -259,7 +260,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                                   spreadRadius: 5,
                                   blurRadius: 8,
                                   offset: Offset(
-                                      0, 3), // changes position of shadow
+                                      0, 3), 
                                 ),
                               ],
                             ),

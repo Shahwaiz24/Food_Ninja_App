@@ -11,10 +11,6 @@ bool is_error = false;
 
 // Its an Function to Logout User //
 
-Future<void> logoutuser() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.clear();
-}
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -32,11 +28,21 @@ class ProfilePage extends StatelessWidget {
             height: screenHeight,
             width: screenWidth,
             child: Container(
+              height: screenHeight * 0.090,
               alignment: Alignment.topCenter,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/profile.jpg'),
-                      fit: BoxFit.cover)),
+              child: Container(
+                height: screenHeight * 0.460,
+                width: screenWidth,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: screenHeight * 0.030,
+                  ),
+                  child: Image(
+                    image: NetworkImage(user_data['userProfilePhoto']),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
 
               // child: is_error == true
               //     ? Image.file(

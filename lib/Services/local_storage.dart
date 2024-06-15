@@ -48,6 +48,10 @@ static Future<bool> checkUserLoggedIn() async {
 }
 
 
+static Future<void> logoutuser() async {
+  await prefs.clear();
+}
+
 // Function to save map to SharedPreferences
   static Future<void> saveuserdata(
       {required String key, required Map<dynamic, dynamic> data}) async {
