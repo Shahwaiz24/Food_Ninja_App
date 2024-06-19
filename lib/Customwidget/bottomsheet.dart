@@ -189,131 +189,155 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                     'Favourites',
                     style: TextStyle(
                         fontFamily: 'Poppins_SemiBold',
-                        fontSize: screenHeight * 0.018,
+                        fontSize: screenHeight * 0.020,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
                 hasFavourites == true
                     ? ListView.builder(
                         itemCount: Favourite_data.length,
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return Container(
-                            height: screenHeight * 0.110,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.040),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.4),
-                                  spreadRadius: 5,
-                                  blurRadius: 8,
-                                  offset: Offset(0, 3),
+                          return Dismissible(
+                              background: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xffFF9012),
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth * 0.050)),
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: screenWidth * 0.030),
+                                  child: Icon(
+                                    Icons.delete_outline_outlined,
+                                    color: Colors.white,
+                                    size: screenHeight * 0.040,
+                                  ),
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: screenHeight * 0.010,
-                                  right: screenWidth * 0.035,
-                                  left: screenWidth * 0.035,
-                                  bottom: screenHeight * 0.010),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: screenHeight * 0.070,
-                                    width: screenWidth * 0.160,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.026),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                Favourite_data[index]['image']),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                  SizedBox(
-                                    width: screenWidth * 0.040,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        Favourite_data[index]['name'],
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins_SemiBold',
-                                            fontSize: screenHeight * 0.019,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(
-                                        height: screenHeight * 0.006,
-                                      ),
-                                      Text(
-                                        Favourite_data[index]['resturant'],
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins_Light',
-                                            fontSize: screenHeight * 0.018,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey[700]),
-                                      ),
-                                      SizedBox(
-                                        height: screenHeight * 0.007,
-                                      ),
-                                      Text(
-                                        Favourite_data[index]['price']
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: screenHeight * 0.020,
-                                            fontFamily: 'Poppins_Light',
-                                            fontWeight: FontWeight.w500,
-                                            color: linearGreen),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          Index = index;
-                                        });
-
-                                        await LocalStorage.deletefavourite(
-                                            keyToDelete: Favourite_data[index]);
-                                        await LocalStorage.retrivefavourites();
-                                      },
-                                      icon: Icon(
-                                        Icons.delete_outline_outlined,
-                                        size: screenHeight * 0.030,
-                                        color: linearGreen,
-                                      ))
-                                ],
                               ),
-                            ),
-                          );
+                              direction: DismissDirection.horizontal,
+                              key: ValueKey(
+                                  Favourite_data[index]['name'].toString()),
+                              onDismissed: (direction) async {
+                                setState(() {
+                                  Index = index;
+                                  isloading = true;
+                                });
+
+                                await LocalStorage.deletefavourite(
+                                    keyToDelete: Favourite_data[index]);
+                                await LocalStorage.retrivefavourites();
+                                setState(() {
+                                  isloading = false;
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: screenHeight * 0.025),
+                                child: Container(
+                                  height: screenHeight * 0.120,
+                                  decoration: BoxDecoration(
+                                      color: WhiteandBlack,
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth * 0.050)),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: screenHeight * 0.010,
+                                        right: screenWidth * 0.035,
+                                        left: screenWidth * 0.035,
+                                        bottom: screenHeight * 0.010),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: screenHeight * 0.070,
+                                          width: screenWidth * 0.160,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      screenWidth * 0.026),
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      Favourite_data[index]
+                                                          ['image']),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                        SizedBox(
+                                          width: screenWidth * 0.040,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              Favourite_data[index]['name'],
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      'Poppins_SemiBold',
+                                                  fontSize:
+                                                      screenHeight * 0.019,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            SizedBox(
+                                              height: screenHeight * 0.003,
+                                            ),
+                                            Text(
+                                              Favourite_data[index]
+                                                  ['resturant'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins_Light',
+                                                  fontSize:
+                                                      screenHeight * 0.018,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey[500]),
+                                            ),
+                                            SizedBox(
+                                              height: screenHeight * 0.006,
+                                            ),
+                                            Text(
+                                              "\$ ${Favourite_data[index]['price'].toString()}",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      screenHeight * 0.025,
+                                                  fontFamily: 'Poppins_Regular',
+                                                  fontWeight: FontWeight.w400,
+                                                  color: linearGreen),
+                                            ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ));
                         })
-                    : Container(
-                        height: screenHeight * 0.080,
-                        decoration: BoxDecoration(
-                            color: WhiteandBlack,
-                            borderRadius:
-                                BorderRadius.circular(screenWidth * 0.030)),
-                        child: Center(
-                          child: Text(
-                            'There is No Item in Your Favourites',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Poppins_Regular',
-                                fontSize: screenHeight * 0.016,
-                                fontWeight: FontWeight.w500),
+                    : Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.020),
+                        child: Container(
+                          height: screenHeight * 0.070,
+                          decoration: BoxDecoration(
+                              color: WhiteandBlack,
+                              borderRadius:
+                                  BorderRadius.circular(screenWidth * 0.030)),
+                          child: Center(
+                            child: Text(
+                              'There is No Item in Your Favourites',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins_Regular',
+                                  fontSize: screenHeight * 0.019,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
                       ),
-                SizedBox(
-                  height: screenHeight * 0.015,
-                ),
+                Container(
+                  height: screenHeight * 0.100,
+                  width: screenWidth * 0.850,
+                )
               ],
             ),
           ),
