@@ -120,7 +120,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                           style: TextStyle(
                               fontSize: screenHeight * 0.030,
                               fontWeight: FontWeight.w900,
-                              fontFamily: 'Poppins_SemiBold'),
+                              fontFamily: 'Poppins_Regular'),
                         ),
                         const SizedBox(
                           height: 3,

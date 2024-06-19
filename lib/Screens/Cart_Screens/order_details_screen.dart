@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Screens/Cart_Screens/check_out_sheet.dart';
 import 'package:food_delivery_app/Screens/search_page.dart';
 import 'package:food_delivery_app/main.dart';
@@ -121,29 +122,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: screenHeight * 0.050,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(screenHeight * 0.025),
-                      color: const Color(0xffF9A84D).withOpacity(0.1),
-                    ),
-                    height: screenHeight * 0.060,
-                    width: screenWidth * .14,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios_new,
-                        size: screenWidth * 0.060,
-                        color: const Color(0xffDA6317),
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: screenHeight * 0.040,
                 ),
@@ -404,7 +382,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
           ),
           is_error == true || cartitems == [] || cartitems.isEmpty
-              ? Text('')
+              ? Positioned(
+                  bottom: screenHeight * 0.012,
+                  left: screenWidth * 0.040,
+                  right: screenWidth * 0.040,
+                  child: BottomNavigation(),
+                )
               : Positioned(
                   child: CheckOut(),
                   bottom: screenHeight * 0.012,
