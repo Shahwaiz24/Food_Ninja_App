@@ -26,7 +26,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
     // Start the timer
     _stopwatch.start();
     // Call the async function
-   LocalStorage.retrivefavourites().then((_) {
+    LocalStorage.retrivefavourites().then((_) {
       // When the async function completes, stop the timer
       _stopwatch.stop();
       // Set isLoading to false once data loading is complete
@@ -200,7 +200,6 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                         itemBuilder: (context, index) {
                           return Container(
                             height: screenHeight * 0.110,
-                            // margin: EdgeInsets.only(top: 20.0),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius:
@@ -245,23 +244,23 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                                       Text(
                                         Favourite_data[index]['name'],
                                         style: TextStyle(
-                                            fontFamily: 'Poppins_Regular',
-                                            fontSize: screenHeight * 0.016,
-                                            fontWeight: FontWeight.w600),
+                                            fontFamily: 'Poppins_SemiBold',
+                                            fontSize: screenHeight * 0.019,
+                                            fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(
-                                        height: 4,
+                                        height: screenHeight * 0.006,
                                       ),
                                       Text(
                                         Favourite_data[index]['resturant'],
                                         style: TextStyle(
-                                            fontFamily: 'Poppins_Regular',
-                                            fontSize: screenHeight * 0.014,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.grey[400]),
+                                            fontFamily: 'Poppins_Light',
+                                            fontSize: screenHeight * 0.018,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[700]),
                                       ),
                                       SizedBox(
-                                        height: screenHeight * 0.008,
+                                        height: screenHeight * 0.007,
                                       ),
                                       Text(
                                         Favourite_data[index]['price']

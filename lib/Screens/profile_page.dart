@@ -11,7 +11,6 @@ bool is_error = false;
 
 // Its an Function to Logout User //
 
-
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
 
@@ -38,26 +37,34 @@ class ProfilePage extends StatelessWidget {
                     bottom: screenHeight * 0.030,
                   ),
                   child: Image(
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.error_outline_rounded,
+                              color: WhiteandBlack,
+                              size: screenHeight * 0.030,
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.020,
+                            ),
+                            Text(
+                              'Network Connection was not Stable',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins_Regular',
+                                  fontSize: screenHeight * 0.024,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                      );
+                    },
                     image: NetworkImage(user_data['userProfilePhoto']),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-
-              // child: is_error == true
-              //     ? Image.file(
-              //         File(user_data['profilepicture']),
-              //       )
-              //     : Padding(
-              //         padding: EdgeInsets.only(top: screenHeight * 0.020),
-              //         child: Text(
-              //           'There is No Image to Show (In Web)',
-              //           style: TextStyle(
-              //               fontSize: screenHeight * 0.018,
-              //               fontFamily: 'Poppins_Regular',
-              //               fontWeight: FontWeight.w600),
-              //         ),
-              //       )
             ),
           ),
           const Positioned(
