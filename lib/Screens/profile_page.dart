@@ -40,27 +40,37 @@ class ProfilePage extends StatelessWidget {
                     errorBuilder: (context, error, stackTrace) {
                       return Center(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.error_outline_rounded,
-                              color: WhiteandBlack,
-                              size: screenHeight * 0.030,
-                            ),
                             SizedBox(
-                              height: screenHeight * 0.020,
+                              height: screenHeight * 0.030,
                             ),
-                            Text(
-                              'Network Connection was not Stable',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins_Regular',
-                                  fontSize: screenHeight * 0.024,
-                                  fontWeight: FontWeight.w500),
-                            )
+                            Row(
+                              children: [
+                                SizedBox(width: screenWidth * 0.010,),
+                                Icon(
+                                  Icons.error_outline_rounded,
+                                  color: Colors.red,
+                                  size: screenHeight * 0.030,
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.020,
+                                ),
+                                Text(
+                                  'Network Connection was not Stable',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins_Regular',
+                                      fontSize: screenHeight * 0.021,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       );
                     },
-                    image: NetworkImage(user_data['userProfilePhoto']),
+                    image:
+                        NetworkImage(user_data['userProfilePhoto'].toString()),
                     fit: BoxFit.cover,
                   ),
                 ),

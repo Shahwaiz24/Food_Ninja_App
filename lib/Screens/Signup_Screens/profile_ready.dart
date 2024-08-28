@@ -85,7 +85,6 @@ class _ProfileReadyState extends State<ProfileReady> {
               ),
             );
           } else if (snapshot.hasData) {
-            userDetails = snapshot.data.snapshot.value;
             return Scaffold(
                 backgroundColor: Colors.white,
                 body: Stack(
@@ -158,6 +157,9 @@ class _ProfileReadyState extends State<ProfileReady> {
                             padding: EdgeInsets.only(bottom: screenHeight * .1),
                             child: InkWell(
                               onTap: () async {
+                                userDetails = snapshot.data.snapshot.value;
+                                await LocalStorage.saveuserdata(
+                                    key: 'user_details', data: userDetails);
                                 await LocalStorage.setUserLoggedIn();
                                 Navigator.pushReplacement(
                                     context,

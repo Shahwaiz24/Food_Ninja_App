@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+bool carted = false;
 
 class ProductContent extends StatefulWidget {
   final int index_;
@@ -14,47 +18,6 @@ class ProductContent extends StatefulWidget {
 }
 
 // Function to Add Item to Cart //
-
-Future<void> additemtocart({required Map<String, dynamic> item}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // Fetching the existing list from SharedPreferences
-  String? jsonString = prefs.getString('My_Cart_Items');
-  if (jsonString != null) {
-    // If existing list is found, decode it
-    List<dynamic> decodedList = json.decode(jsonString);
-    // Cast each item of decoded list to Map<String, dynamic>
-    List<Map<String, dynamic>> existingList =
-        decodedList.map((e) => e as Map<String, dynamic>).toList();
-    // Add the new item to the existing list
-    existingList.add(item);
-    // Encode the updated list to JSON
-    String updatedJsonString = json.encode(existingList);
-    // Save the updated list to SharedPreferences
-    await prefs.setString('My_Cart_Items', updatedJsonString);
-  } else {
-    // If no existing list is found, create a new list with the new item
-    List<Map<String, dynamic>> newList = [item];
-    // Encode the new list to JSON
-    String newJsonString = json.encode(newList);
-    // Save the new list to SharedPreferences
-    await prefs.setString('My_Cart_Items', newJsonString);
-  }
-  print('Item Added to Cart');
-}
-
-// Fetch Cart Items//
-fetchCartItems() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? jsonString = prefs.getString('My_Cart_Items');
-  if (jsonString != null) {
-    List<dynamic> decodedList = json.decode(jsonString);
-    List<Map<String, dynamic>> cartItems =
-        decodedList.map((e) => e as Map<String, dynamic>).toList();
-    return cartItems;
-  } else {
-    return null; // If no items are found, return null
-  }
-}
 
 // Function to Favourite Item //
 bool isfavourite = false;
@@ -94,6 +57,14 @@ class _ResturantContentState extends State<ProductContent> {
   @override
   void initState() {
     super.initState();
+    carted = false; // Default value
+
+    for (var item in cartitems) {
+      if (item['index'] == widget.index_) {
+        carted = true;
+        break; // No need to continue checking once a match is found
+      }
+    }
   }
 
   @override
@@ -272,73 +243,98 @@ class _ResturantContentState extends State<ProductContent> {
               SizedBox(
                 height: screenHeight * 0.080,
               ),
-              InkWell(
-                onTap: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  List<Map<String, dynamic>>? getcart = await fetchCartItems();
-                
-
-                  if (getcart == null) {
-                    additemtocart(item: {
-                      'name': MenuName[widget.index_],
-                      'quantity': 1,
-                      'price': '${Prices[widget.index_]}',
-                      'photo': Menu_Photos[widget.index_],
-                      'item_added': true
-                    });
-                  } else {
-                    bool itemFound = false;
-                    for (int i = 0; i < getcart.length; i++) {
-                      if (getcart[i]['name'] == MenuName[widget.index_]) {
-                        setState(() {
-                          getcart[i]
-                              ['quantity']++; // Increase quantity if item found
-                          itemFound = true;
-                        });
-                        // Encode the updated list to JSON
-                        String updatedJsonString = json.encode(getcart);
-                        // Save the updated list to SharedPreferences
-                        await prefs.setString(
-                            'My_Cart_Items', updatedJsonString);
-                        print('Item quantity updated in Cart');
-                        print(getcart);
-                        break;
-                      }
-                    }
-
-                    if (!itemFound) {
-                      additemtocart(item: {
-                        'name': MenuName[widget.index_],
-                        'quantity': 1,
-                        'price': '${Prices[widget.index_]}',
-                        'photo': Menu_Photos[widget.index_],
-                        'item_added': true
-                      });
-                    }
-                  }
-                },
-                child: Center(
-                  child: Container(
-                    height: buttonHeigth,
-                    width: buttonWidth,
-                    decoration: BoxDecoration(
-                      color: linearGreen,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'Add to Cart',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: buttonTitle,
-                        fontFamily: 'Poppins_SemiBold',
-                        fontWeight: FontWeight.w500,
+              carted == true
+                  ? Center(
+                      child: Container(
+                        height: buttonHeigth,
+                        width: buttonWidth,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                            child: Text(
+                          'Add to Cart',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: buttonTitle,
+                            fontFamily: 'Poppins_SemiBold',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )),
                       ),
-                    )),
-                  ),
-                ),
-              )
+                    )
+                  : InkWell(
+                      onTap: () async {
+                        LocalStorage.additemtocart(item: {
+                          'name': MenuName[widget.index_],
+                          'index': widget.index_,
+                          'quantity': 1,
+                          'price': '${Prices[widget.index_]}',
+                          'photo': Menu_Photos[widget.index_],
+                          'item_added': true
+                        });
+                        setState(() {
+                          carted = true;
+                        });
+
+                        // List<Map<String, dynamic>>? getcart =
+                        //     await LocalStorage.fetchCartItem();
+
+                        // if (getcart == null) {
+
+                        // } else {
+                        //   bool itemFound = false;
+                        //   for (int i = 0; i < getcart.length; i++) {
+                        //     if (getcart[i]['name'] == MenuName[widget.index_]) {
+                        //       setState(() {
+                        //  getcart[i][
+                        //             'quantity']++; // Increase quantity if item found
+                        //         itemFound = true;
+                        //       });
+                        //       // Encode the updated list to JSON
+                        //       String updatedJsonString = json.encode(getcart);
+                        //       // Save the updated list to SharedPreferences
+                        //       await LocalStorage.prefs.setString(
+                        //           'My_Cart_Items', updatedJsonString);
+                        //       print('Item quantity updated in Cart');
+                        //       print(getcart);
+                        //       break;
+                        //     }
+                        //   }
+
+                        //   if (!itemFound) {
+                        //     LocalStorage.additemtocart(item: {
+                        //       'name': MenuName[widget.index_],
+                        //       'quantity': 1,
+                        //       'price': '${Prices[widget.index_]}',
+                        //       'photo': Menu_Photos[widget.index_],
+                        //       'item_added': true
+                        //     });
+                        //   }
+                        // }
+                      },
+                      child: Center(
+                        child: Container(
+                          height: buttonHeigth,
+                          width: buttonWidth,
+                          decoration: BoxDecoration(
+                            color: linearGreen,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                              child: Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: buttonTitle,
+                              fontFamily: 'Poppins_SemiBold',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )),
+                        ),
+                      ),
+                    )
             ],
           ),
         ),

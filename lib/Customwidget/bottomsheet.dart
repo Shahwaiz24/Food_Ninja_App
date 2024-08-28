@@ -114,6 +114,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
+                          // "sdsdsdsdsds",
                           user_data['userfirstname'] +
                               ' ' +
                               user_data['userlastname'],
@@ -127,6 +128,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                         ),
                         Text(
                           user_data['useremail'],
+                          // "sdsdsdsdsds",
                           style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'Poppins_Light',
@@ -195,6 +197,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                 ),
                 hasFavourites == true
                     ? ListView.builder(
+                        padding: EdgeInsets.only(top: screenHeight * 0.010),
                         itemCount: Favourite_data.length,
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

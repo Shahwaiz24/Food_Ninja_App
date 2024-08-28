@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,11 +61,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   child: Text('Done'),
                   onPressed: () {
                     setState(() {
-                      removedataofcart();
+                      cartitems.clear();
+                      LocalStorage.removedataofcart();
                     });
-                   Navigator.pushReplacement(
-                                  context,
-                              MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
                   },
                 ),
               ),
@@ -156,11 +158,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               Text(
                                 'Deliver To',
                                 style: TextStyle(
-                                    color: Colors.grey[600],
+                                    color: Colors.black.withOpacity(0.8),
                                     fontFamily: 'Poppins_Regular',
-                                    fontSize: screenHeight * 0.016,
+                                    fontSize: screenHeight * 0.018,
                                     letterSpacing: 1.5,
-                                    fontWeight: FontWeight.w300),
+                                    fontWeight: FontWeight.w400),
                               ),
                               Padding(
                                 padding:
@@ -168,13 +170,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: screenHeight * 0.045,
+                                      height: screenHeight * 0.040,
                                       width: screenWidth * .1,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   'assets/images/Location_Logo.png'),
-                                              fit: BoxFit.cover)),
+                                              fit: BoxFit.fitHeight)),
                                     ),
                                     SizedBox(
                                       width: screenWidth * 0.030,
@@ -186,7 +188,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          user_data['userlocation']['street'],
+                                          "Karachi",
+                                          // user_data['userlocation']['city'],
                                           style: TextStyle(
                                               fontFamily: 'Poppins_SemiBold',
                                               fontSize: screenHeight * 0.018,
@@ -222,9 +225,9 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               Text(
                                 'Payment Method',
                                 style: TextStyle(
-                                    color: Colors.grey[600],
+                                    color: Colors.black.withOpacity(0.8),
                                     fontFamily: 'Poppins_Regular',
-                                    fontSize: screenHeight * 0.016,
+                                    fontSize: screenHeight * 0.018,
                                     letterSpacing: 1.5,
                                     fontWeight: FontWeight.w300),
                               ),
@@ -235,18 +238,32 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                   children: [
                                     Container(
                                       height: screenHeight * 0.035,
-                                      width: screenWidth * .3,
+                                      width: screenWidth * .2,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/images/Paypal_Icon.png'),
-                                              fit: BoxFit.cover)),
+                                                  'assets/images/PayPal_Icon.png'
+
+                                                  // user_data[
+                                                  //               'userpaymentmethod']
+                                                  //           ['cardname'] ==
+                                                  //       'Paypal'
+                                                  //   ?  'assets/images/PayPal_Icon.png'
+                                                  //   : user_data['userpaymentmethod']
+                                                  //               ['cardname'] ==
+                                                  //           'Visa'
+                                                  //       ? "assets/images/Visa_Text.png"
+                                                  //       : 'assets/images/Payoneer_Logo.png'
+
+                                                  ),
+                                              fit: BoxFit.fitHeight)),
                                     ),
                                     Spacer(),
                                     Text(
-                                      user_data['userpaymentmethod']
-                                              ['cardnumber']
-                                          .toString(),
+                                      "00000000000000000000",
+                                      // user_data['userpaymentmethod']
+                                      // ['cardnumber']
+                                      // .toString(),
                                       style: TextStyle(
                                           fontFamily: 'Poppins_Light',
                                           fontSize: screenHeight * 0.018,
@@ -305,7 +322,4 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
 }
 
 // Function to remove data from carts//
-Future<void> removedataofcart() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.remove('My_Cart_Items');
-}
+

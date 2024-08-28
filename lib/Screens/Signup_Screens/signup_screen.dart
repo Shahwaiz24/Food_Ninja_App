@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 // Function to check if a child node exists in "User DataBase" node
     Future<bool> doesChildNodeExist(String childName) async {
       DatabaseReference userDatabaseRef =
-          database.reference().child('Users DataBase');
+          database.ref().child('Users DataBase');
       DataSnapshot snapshot = await userDatabaseRef.child(childName).get();
       return snapshot.exists;
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Screens/Product_Screen/product_content.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
+import 'package:food_delivery_app/main.dart';
 
 // ignore: must_be_immutable
 class ProductScreen extends StatefulWidget {
@@ -35,6 +36,39 @@ class _ProductScreenState extends State<ProductScreen> {
                 height: screenHeight * 0.4, // Adjust the height as needed
                 child: Image(
                   image: NetworkImage(MenuImages[widget.index]),
+                  errorBuilder: (context, error, stackTrace) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: screenHeight * 0.030,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: screenWidth * 0.010,
+                            ),
+                            Icon(
+                              Icons.error_outline_rounded,
+                              color: WhiteandBlack,
+                              size: screenHeight * 0.030,
+                            ),
+                            SizedBox(
+                              width: screenWidth * 0.020,
+                            ),
+                            Text(
+                              'Error while Fetching Image',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins_Regular',
+                                  fontSize: screenHeight * 0.021,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
               ),

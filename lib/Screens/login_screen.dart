@@ -372,25 +372,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.010,
-                  ),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Forgot Your Password?',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.040,
-                          color: linearGreen,
-                          letterSpacing: 0.6,
-                          fontFamily: 'Poppins_Regular',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.015,
+                    height: screenHeight * 0.030,
                   ),
                   InkWell(
                     onTap: () async {

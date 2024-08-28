@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Screens/Cart_Screens/check_out_sheet.dart';
 import 'package:food_delivery_app/Screens/search_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<Map<String, dynamic>> cartitems = [];
+
+bool is_error = false;
 
 class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({super.key});
@@ -16,67 +19,13 @@ class OrderDetailsScreen extends StatefulWidget {
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
 }
 
-Future<void> updateList(List<Map<String, dynamic>> itemList) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String updatedJsonString = json.encode(itemList);
-  await prefs.setString('My_Cart_Items', updatedJsonString);
-}
-
-// Function to Update data //
-Future<void> updateitem({required Map<String, dynamic> updatedItem}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // Fetching the existing list from SharedPreferences
-  String? jsonString = prefs.getString('My_Cart_Items');
-  if (jsonString != null) {
-    List<dynamic> decodedList = json.decode(jsonString);
-    List<Map<String, dynamic>> cartItems =
-        decodedList.map((e) => e as Map<String, dynamic>).toList();
-    // Find the index of the item to update
-    int index = cartItems.indexWhere((item) =>
-        item['name'] ==
-        updatedItem['name']); // Assuming 'name' is the unique identifier
-    if (index != -1) {
-      // If item found, update it
-      cartItems[index] = updatedItem;
-      // Encode the updated list to JSON
-      String updatedJsonString = json.encode(cartItems);
-      // Save the updated list to SharedPreferences
-      await prefs.setString('My_Cart_Items', updatedJsonString);
-    }
-  }
-}
-
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    CartItems();
-  }
-
-  bool is_error = false;
-
-  // Function to Fetch Items //
-  CartItems() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.clear();
-    String? jsonString = prefs.getString('My_Cart_Items');
-    if (jsonString != null) {
-      List<dynamic> decodedList = json.decode(jsonString);
-
-      cartitems = decodedList.map((e) => e as Map<String, dynamic>).toList();
-
-      setState(() {
-        is_error = false;
-
-        // Set is_error to false when items are found
-      });
-    } else if (cartitems.isEmpty || cartitems == []) {
-      setState(() {
-        is_error = true;
-      });
-    }
+    LocalStorage.CartItems();
   }
 
   void calculateAndSetTotalPrice(List<Map<String, dynamic>> cartItems) {
@@ -197,7 +146,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   // Remove the dismissed item from the list
                                   cartitems.removeAt(index);
                                   // Update the list in SharedPreferences
-                                  updateList(cartitems);
+                                  LocalStorage.updateList(cartitems);
                                   calculateAndSetTotalPrice(cartitems);
                                   calculatetotalprice();
                                 });
@@ -294,7 +243,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                 setState(() {
                                                   cartitems[index][
                                                       'quantity']--; // Decrease quantity
-                                                  updateList(cartitems);
+                                                  LocalStorage.updateList(
+                                                      cartitems);
                                                   calculateAndSetTotalPrice(
                                                       cartitems);
                                                   calculatetotalprice(); // Update list in SharedPreferences
@@ -342,7 +292,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                               setState(() {
                                                 cartitems[index][
                                                     'quantity']++; // Increase quantity
-                                                updateList(cartitems);
+                                                LocalStorage.updateList(
+                                                    cartitems);
                                                 calculateAndSetTotalPrice(
                                                     cartitems);
                                                 calculatetotalprice();

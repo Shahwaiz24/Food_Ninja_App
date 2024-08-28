@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as slider;
 import 'package:food_delivery_app/Screens/Resturant_Screens/resturant_screen.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/main.dart';
@@ -20,8 +20,9 @@ class _SlideState extends State<Slide> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenHeight = screenSize.height;
     final double screenWidth = screenSize.width;
-    return CarouselSlider(
-      options: CarouselOptions(
+
+    return slider.CarouselSlider(
+      options: slider.CarouselOptions(
         height: 170.0,
         autoPlay: true,
         aspectRatio: 16 / 9,

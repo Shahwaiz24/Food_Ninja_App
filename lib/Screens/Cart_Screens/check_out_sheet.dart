@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/Cart_Screens/confirm_order.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,24 +42,11 @@ int calculateFinalPrice(int subtotalPrice) {
   return totalPrice;
 }
 
-Future<List<Map<String, dynamic>>> fetchCartItems() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? jsonString = prefs.getString('My_Cart_Items');
-  if (jsonString != null) {
-    List<dynamic> decodedList = json.decode(jsonString);
-    List<Map<String, dynamic>> cartItems =
-        decodedList.map((e) => e as Map<String, dynamic>).toList();
-    return cartItems;
-  } else {
-    return []; // Return empty list if no items are found
-  }
-}
-
 class _CheckOutState extends State<CheckOut> {
   @override
   void initState() {
     super.initState();
-    fetchCartItems().then((cartItems) {
+    LocalStorage.fetchCartItems().then((cartItems) {
       calculateAndSetTotalPrice(cartItems);
       finalPrice = calculateFinalPrice(subtotalPrice);
     });
@@ -82,145 +70,149 @@ class _CheckOutState extends State<CheckOut> {
     final double buttonTitle = screenWidth * 0.050;
     final double buttonHeigth = screenHeight * 0.06;
 
-    return Container(
-      height: screenHeight * 0.240,
-      width: screenWidth * 2,
-      decoration: BoxDecoration(
-          color: linearGreen,
-          borderRadius: BorderRadius.circular(screenWidth * 0.040)),
-      child: Stack(
-        children: [
-          Container(
-            height: screenHeight * 0.3,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Second_Pattern_bg.png'),
-                fit: BoxFit.fill,
+    return Padding(
+      padding: EdgeInsets.only(bottom: screenHeight * 0.020),
+      child: Container(
+        height: screenHeight * 0.240,
+        width: screenWidth * 2,
+        decoration: BoxDecoration(
+            color: linearGreen,
+            borderRadius: BorderRadius.circular(screenWidth * 0.040)),
+        child: Stack(
+          children: [
+            Container(
+              height: screenHeight * 0.3,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/Second_Pattern_bg.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: screenHeight * 0.030,
-                right: screenWidth * 0.055,
-                left: screenWidth * 0.055),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Sub-Total',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Poppins_Regular',
-                          fontWeight: FontWeight.w200,
-                          fontSize: screenHeight * 0.018),
-                    ),
-                    const Spacer(),
-                    Text('\$$subtotalPrice',
+            Padding(
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.030,
+                  right: screenWidth * 0.055,
+                  left: screenWidth * 0.055),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Sub-Total',
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins_Regular',
                             fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.018)),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.008,
-                ),
-                Row(
-                  children: [
-                    Text('Delivery Charge',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.018)),
-                    const Spacer(),
-                    Text('$delivery\$',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.018)),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.008,
-                ),
-                Row(
-                  children: [
-                    Text('Discount',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.018)),
-                    const Spacer(),
-                    Text('$discount\$',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.018)),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.010,
-                ),
-                Row(
-                  children: [
-                    Text('Total',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.020)),
-                    Spacer(),
-                    Text('$finalPrice\$',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins_Regular',
-                            fontWeight: FontWeight.w200,
-                            fontSize: screenHeight * 0.020))
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.010,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                                  context,
-                              MaterialPageRoute(builder: (context) =>ConfirmOrder() ));
-                  },
-                  child: Container(
-                    height: buttonHeigth,
-                    width: buttonWidth,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'Place My Order',
-                      style: TextStyle(
-                        color: linearGreen,
-                        fontSize: buttonTitle,
-                        fontFamily: 'Poppins_SemiBold',
-                        fontWeight: FontWeight.w500,
+                            fontSize: screenHeight * 0.018),
                       ),
-                    )),
+                      const Spacer(),
+                      Text('\$$subtotalPrice',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.018)),
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: screenHeight * 0.008,
+                  ),
+                  Row(
+                    children: [
+                      Text('Delivery Charge',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.018)),
+                      const Spacer(),
+                      Text('$delivery\$',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.018)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.008,
+                  ),
+                  Row(
+                    children: [
+                      Text('Discount',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.018)),
+                      const Spacer(),
+                      Text('$discount\$',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.018)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.010,
+                  ),
+                  Row(
+                    children: [
+                      Text('Total',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.020)),
+                      Spacer(),
+                      Text('$finalPrice\$',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins_Regular',
+                              fontWeight: FontWeight.w200,
+                              fontSize: screenHeight * 0.020))
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.010,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ConfirmOrder()));
+                    },
+                    child: Container(
+                      height: buttonHeigth,
+                      width: buttonWidth,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                          child: Text(
+                        'Place My Order',
+                        style: TextStyle(
+                          color: linearGreen,
+                          fontSize: buttonTitle,
+                          fontFamily: 'Poppins_SemiBold',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+              //
             ),
-            //
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
