@@ -114,10 +114,10 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          // "sdsdsdsdsds",
-                          user_data['userfirstname'] +
-                              ' ' +
-                              user_data['userlastname'],
+                          "sdsdsdsdsds",
+                          // user_data['userfirstname'] +
+                          //     ' ' +
+                          //     user_data['userlastname'],
                           style: TextStyle(
                               fontSize: screenHeight * 0.030,
                               fontWeight: FontWeight.w900,
@@ -127,8 +127,8 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                           height: 3,
                         ),
                         Text(
-                          user_data['useremail'],
-                          // "sdsdsdsdsds",
+                          // user_data['useremail'],
+                          "sdsdsdsdsds",
                           style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'Poppins_Light',

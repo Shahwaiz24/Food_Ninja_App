@@ -188,8 +188,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Karachi",
-                                          // user_data['userlocation']['city'],
+                                          // "Karachi",
+                                          user_data['userlocation']['city'],
                                           style: TextStyle(
                                               fontFamily: 'Poppins_SemiBold',
                                               fontSize: screenHeight * 0.018,
@@ -242,28 +242,28 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
-                                                  'assets/images/PayPal_Icon.png'
+                                                  // 'assets/images/PayPal_Icon.png'
 
-                                                  // user_data[
-                                                  //               'userpaymentmethod']
-                                                  //           ['cardname'] ==
-                                                  //       'Paypal'
-                                                  //   ?  'assets/images/PayPal_Icon.png'
-                                                  //   : user_data['userpaymentmethod']
-                                                  //               ['cardname'] ==
-                                                  //           'Visa'
-                                                  //       ? "assets/images/Visa_Text.png"
-                                                  //       : 'assets/images/Payoneer_Logo.png'
+                                                  user_data[
+                                                                'userpaymentmethod']
+                                                            ['cardname'] ==
+                                                        'Paypal'
+                                                    ?  'assets/images/PayPal_Icon.png'
+                                                    : user_data['userpaymentmethod']
+                                                                ['cardname'] ==
+                                                            'Visa'
+                                                        ? "assets/images/Visa_Text.png"
+                                                        : 'assets/images/Payoneer_Logo.png'
 
                                                   ),
                                               fit: BoxFit.fitHeight)),
                                     ),
                                     Spacer(),
                                     Text(
-                                      "00000000000000000000",
-                                      // user_data['userpaymentmethod']
-                                      // ['cardnumber']
-                                      // .toString(),
+                                      // "00000000000000000000",
+                                      user_data['userpaymentmethod']
+                                      ['cardnumber']
+                                      .toString(),
                                       style: TextStyle(
                                           fontFamily: 'Poppins_Light',
                                           fontSize: screenHeight * 0.018,

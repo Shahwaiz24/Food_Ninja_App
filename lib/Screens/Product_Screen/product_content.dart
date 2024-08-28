@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Customwidget/bottomsheet.dart';
 import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
 import 'package:food_delivery_app/Screens/data_model.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
@@ -21,48 +22,24 @@ class ProductContent extends StatefulWidget {
 
 // Function to Favourite Item //
 bool isfavourite = false;
-Future<void> addMapToListInSharedPreferences(
-    {required Map<String, dynamic> item}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // Fetching the existing list from SharedPreferences
-  String? jsonString = prefs.getString('My_Favourites');
-  if (jsonString != null) {
-    // If existing list is found, decode it
-    List<dynamic> decodedList = json.decode(jsonString);
-    // Cast each item of decoded list to Map<String, dynamic>
-    List<Map<String, dynamic>> existingList =
-        decodedList.cast<Map<String, dynamic>>();
-    // Add the new item to the existing list
-    existingList.add(item);
-    print(existingList);
-    // Encode the updated list to JSON
-    String updatedJsonString = json.encode(existingList);
-    // Save the updated list to SharedPreferences
-    await prefs.setString('My_Favourites', updatedJsonString);
-    // prefs.clear();
-  } else {
-    // If no existing list is found, create a new list with the new item
-    List<Map<String, dynamic>> newList = [item];
-    // Encode the new list to JSON
-    String newJsonString = json.encode(newList);
-    print(newList);
-    // Save the new list to SharedPreferences
-    await prefs.setString('My_Favourites', newJsonString);
-    // prefs.clear();
-  }
-  print('Map added to SharedPreferences List');
-}
 
 class _ResturantContentState extends State<ProductContent> {
   @override
   void initState() {
     super.initState();
-    carted = false; // Default value
+    carted = false;
+    isfavourite = false;
 
-    for (var item in cartitems) {
-      if (item['index'] == widget.index_) {
+    for (var i = 0; i < cartitems.length; i++) {
+      if (cartitems[i]['index'] == widget.index_) {
         carted = true;
-        break; // No need to continue checking once a match is found
+        break;
+      }
+    }
+    for (var i = 0; i < Favourite_data.length; i++) {
+      if (Favourite_data[i]['index'] == widget.index_) {
+        isfavourite = true;
+        break;
       }
     }
   }
@@ -150,10 +127,26 @@ class _ResturantContentState extends State<ProductContent> {
                         Map<String, dynamic> ItemtoFav = {
                           'name': MenuName[widget.index_],
                           'image': Menu_Photos[widget.index_],
+                          'index': widget.index_,
                           'price': Prices[widget.index_],
                           'resturant': Names[widget.index_]
                         };
-                        addMapToListInSharedPreferences(item: ItemtoFav);
+                        LocalStorage.addMapToListInSharedPreferences(
+                            item: ItemtoFav);
+                      } else if (isfavourite == false) {
+                        Map<String, dynamic> itemtodelete = {
+                          'name': MenuName[widget.index_],
+                          'image': Menu_Photos[widget.index_],
+                          'index': widget.index_,
+                          'price': Prices[widget.index_],
+                          'resturant': Names[widget.index_]
+                        };
+                        LocalStorage.removefavourite(
+                            item: itemtodelete, index: widget.index_);
+                        print('Before Delete | ${Favourite_data}');
+
+                        Favourite_data.remove(Favourite_data[widget.index_]);
+                        print('After Delete | ${Favourite_data}');
                       }
                     },
                     child: Container(

@@ -91,7 +91,8 @@ class LocalStorage {
   static Future<void> logoutuser() async {
     await prefs.clear();
   }
-static Future<void> removedataofcart() async {
+
+  static Future<void> removedataofcart() async {
     await prefs.remove('My_Cart_Items');
   }
 
@@ -107,7 +108,61 @@ static Future<void> removedataofcart() async {
       return null; // If no items are found, return null
     }
   }
-  static  Future<void> additemtocart(
+
+  static Future<void> addMapToListInSharedPreferences(
+      {required Map<String, dynamic> item}) async {
+    // Fetching the existing list from SharedPreferences
+    String? jsonString = prefs.getString('My_Favourites');
+    if (jsonString != null) {
+      // If existing list is found, decode it
+      List<dynamic> decodedList = json.decode(jsonString);
+      // Cast each item of decoded list to Map<String, dynamic>
+      List<Map<String, dynamic>> existingList =
+          decodedList.cast<Map<String, dynamic>>();
+      // Add the new item to the existing list
+      existingList.add(item);
+      print(existingList);
+      // Encode the updated list to JSON
+      String updatedJsonString = json.encode(existingList);
+      // Save the updated list to SharedPreferences
+      await prefs.setString('My_Favourites', updatedJsonString);
+      // prefs.clear();
+    } else {
+      // If no existing list is found, create a new list with the new item
+      List<Map<String, dynamic>> newList = [];
+      newList.add(item);
+      // Encode the new list to JSON
+      String newJsonString = json.encode(newList);
+      print(newList);
+      // Save the new list to SharedPreferences
+      await prefs.setString('My_Favourites', newJsonString);
+      // prefs.clear();
+    }
+    print('Map added to SharedPreferences List');
+  }
+
+  static Future<void> removefavourite(
+      {required Map<String, dynamic> item, required int index}) async {
+    // Fetching the existing list from SharedPreferences
+    String? jsonString = prefs.getString('My_Favourites');
+    if (jsonString != null) {
+      // If existing list is found, decode it
+      List<dynamic> decodedList = json.decode(jsonString);
+      // Cast each item of decoded list to Map<String, dynamic>
+      List<Map<String, dynamic>> existingList =
+          decodedList.cast<Map<String, dynamic>>();
+      // Add the new item to the existing list
+      existingList.remove(existingList[index]);
+      print(existingList);
+      // Encode the updated list to JSON
+      String updatedJsonString = json.encode(existingList);
+      // Save the updated list to SharedPreferences
+      await prefs.setString('My_Favourites', updatedJsonString);
+      // prefs.clear();
+    }
+  }
+
+  static Future<void> additemtocart(
       {required Map<String, dynamic> item}) async {
     // Fetching the existing list from SharedPreferences
     String? jsonString = prefs.getString('My_Cart_Items');
@@ -134,8 +189,8 @@ static Future<void> removedataofcart() async {
     print('Item Added to Cart');
   }
 
-static        Future<void> updateitem(
-          {required Map<String, dynamic> updatedItem}) async {
+  static Future<void> updateitem(
+      {required Map<String, dynamic> updatedItem}) async {
     String? jsonString = prefs.getString('My_Cart_Items');
     if (jsonString != null) {
       List<dynamic> decodedList = json.decode(jsonString);
@@ -156,8 +211,7 @@ static        Future<void> updateitem(
     }
   }
 
-  
- static Future<List<Map<String, dynamic>>> fetchCartItems() async {
+  static Future<List<Map<String, dynamic>>> fetchCartItems() async {
     String? jsonString = prefs.getString('My_Cart_Items');
     if (jsonString != null) {
       List<dynamic> decodedList = json.decode(jsonString);
@@ -168,10 +222,12 @@ static        Future<void> updateitem(
       return []; // Return empty list if no items are found
     }
   }
+
   static Future<void> updateList(List<Map<String, dynamic>> itemList) async {
     String updatedJsonString = json.encode(itemList);
     await prefs.setString('My_Cart_Items', updatedJsonString);
   }
+
   static CartItems() async {
     String? jsonString = prefs.getString('My_Cart_Items');
     if (jsonString != null) {
@@ -179,15 +235,11 @@ static        Future<void> updateitem(
 
       cartitems = decodedList.map((e) => e as Map<String, dynamic>).toList();
 
-    
-        is_error = false;
+      is_error = false;
 
-        // Set is_error to false when items are found
-   
+      // Set is_error to false when items are found
     } else if (cartitems.isEmpty || cartitems == []) {
-    
-        is_error = true;
-    
+      is_error = true;
     }
   }
 
@@ -205,7 +257,7 @@ static        Future<void> updateitem(
       {required String key}) async {
     String? jsonString = prefs.getString(key);
     if (jsonString != null) {
-       user_data.clear();
+      user_data.clear();
       savedDetails = jsonDecode(jsonString);
 
       return user_data = savedDetails;
