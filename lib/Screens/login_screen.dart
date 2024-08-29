@@ -1,11 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:food_delivery_app/Services/google_facebook_service.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 
 Map<String, dynamic> user_details = {};
+Map<String, dynamic> userGoogleDetails = {};
 bool isuser = false;
 
 // Functions End //
@@ -101,408 +104,495 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Center(
-                    child: Image(
-                      image: AssetImage('assets/images/Logo.jpg'),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.005,
-                  ),
-                  Center(
-                    child: Text(
-                      'Food Ninja',
-                      style: TextStyle(
-                        color: linearGreen,
-                        fontWeight: FontWeight.w500,
-                        fontSize: screenWidth * 0.1,
-                        fontFamily: 'Viga',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.005,
-                  ),
-                  Center(
-                    child: Text(
-                      'Deliver Favorite Food',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Inter_SemiBold',
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.015,
-                  ),
-                  Center(
-                    child: Text(
-                      'Login To Your Account',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                        fontFamily: 'Viga',
-                        fontSize: screenWidth * 0.06,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.04,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
-                    child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          login_email = value;
-                          isEmailError = false;
-                        });
-                      },
-                      controller: emailController,
-                      focusNode: myFocusNode,
-                      decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Poppins_Regular',
+            GoogleService.isloading == true
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: linearGreen,
                         ),
-                        fillColor: WhiteandBlack,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: isEmailError == true
-                              ? const BorderSide(color: Colors.red)
-                              : BorderSide.none,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: screenWidth * 0.08, top: screenHeight * 0.005),
-                    child: isEmailError == true
-                        ? Row(
+                      )
+                    ],
+                  )
+                : GoogleService.isError == true
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.error,
+                                Icons.error_outline_rounded,
                                 color: Colors.red,
-                                size: screenWidth * 0.05,
+                                size: screenHeight * 0.035,
                               ),
                               SizedBox(
-                                width: screenWidth * 0.02,
+                                width: screenWidth * 0.010,
                               ),
-                              Text(erroremail!,
-                                  style: const TextStyle(
-                                      fontFamily: 'Poppins_Regular',
-                                      fontWeight: FontWeight.w700)),
+                              Text(
+                                userGoogleDetails['details'],
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenHeight * 0.030),
+                              ),
+                              SizedBox(
+                                width: screenWidth * 0.010,
+                              ),
                             ],
                           )
-                        : const Text(''),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.08,
-                        vertical: screenHeight * 0.005),
-                    child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          login_password = value;
-                          isPassError = false;
-                        });
-                      },
-                      controller: passController,
-                      obscureText: true,
-                      obscuringCharacter: '*',
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Poppins_Regular',
-                        ),
-                        fillColor: WhiteandBlack,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: isPassError
-                              ? const BorderSide(color: Colors.red)
-                              : BorderSide.none,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: screenWidth * 0.08, top: screenHeight * 0.001),
-                    child: isPassError == true
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 2),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.error,
-                                  color: Colors.red,
-                                  size: screenWidth * 0.05,
-                                ),
-                                SizedBox(
-                                  width: screenWidth * 0.02,
-                                ),
-                                Text(errorpass!,
-                                    style: const TextStyle(
-                                        fontFamily: 'Poppins_Regular',
-                                        fontWeight: FontWeight.w700)),
-                              ],
+                        ],
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const Center(
+                              child: Image(
+                                image: AssetImage('assets/images/Logo.jpg'),
+                              ),
                             ),
-                          )
-                        : const Text(''),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.0010,
-                  ),
-                  Center(
-                    child: Text(
-                      "Or Continue With",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                        fontFamily: 'Viga',
-                        fontSize: screenWidth * 0.05,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.020,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: screenWidth * 0.02, left: screenWidth * 0.010),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: WhiteandBlack),
-                              borderRadius: BorderRadius.circular(15),
+                            SizedBox(
+                              height: screenHeight * 0.005,
                             ),
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                width: screenWidth * 0.40,
-                                height: screenHeight * 0.08,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black.withOpacity(0.5)),
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
+                            Center(
+                              child: Text(
+                                'Food Ninja',
+                                style: TextStyle(
+                                  color: linearGreen,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: screenWidth * 0.1,
+                                  fontFamily: 'Viga',
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(screenWidth * 0.006),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        image: const AssetImage(
-                                            'assets/images/Facebook_Icon.jpg'),
-                                        height: screenWidth * 0.40,
-                                        width: screenWidth * 0.10,
-                                      ),
-                                      SizedBox(
-                                        width: screenWidth * 0.010,
-                                      ),
-                                      Text(
-                                        "Facebook",
-                                        style: TextStyle(
-                                          fontSize: screenHeight * 0.022,
-                                          fontFamily: 'Poppins_Regular',
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: screenWidth * 0.005,
-                                      ),
-                                    ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.005,
+                            ),
+                            Center(
+                              child: Text(
+                                'Deliver Favorite Food',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Inter_SemiBold',
+                                  fontSize: screenWidth * 0.04,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.015,
+                            ),
+                            Center(
+                              child: Text(
+                                'Login To Your Account',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily: 'Viga',
+                                  fontSize: screenWidth * 0.06,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.04,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.08),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    login_email = value;
+                                    isEmailError = false;
+                                  });
+                                },
+                                controller: emailController,
+                                focusNode: myFocusNode,
+                                decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  hintStyle: const TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: 'Poppins_Regular',
+                                  ),
+                                  fillColor: WhiteandBlack,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: isEmailError == true
+                                        ? const BorderSide(color: Colors.red)
+                                        : BorderSide.none,
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: screenWidth * 0.1,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: WhiteandBlack),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              width: screenWidth * 0.40,
-                              height: screenHeight * 0.08,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(
-                                    color: Colors.black.withOpacity(0.5)),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(screenWidth * 0.006),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image(
-                                      image: const AssetImage(
-                                          'assets/images/Google_Icon.jpg'),
-                                      height: screenWidth * 0.40,
-                                      width: screenWidth * 0.10,
-                                    ),
-                                    SizedBox(
-                                      width: screenWidth * 0.010,
-                                    ),
-                                    Text(
-                                      "Google",
-                                      style: TextStyle(
-                                        fontSize: screenHeight * 0.022,
-                                        fontFamily: 'Poppins_Regular',
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: screenWidth * 0.005,
-                                    ),
-                                  ],
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: screenWidth * 0.08,
+                                  top: screenHeight * 0.005),
+                              child: isEmailError == true
+                                  ? Row(
+                                      children: [
+                                        Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                          size: screenWidth * 0.05,
+                                        ),
+                                        SizedBox(
+                                          width: screenWidth * 0.02,
+                                        ),
+                                        Text(erroremail!,
+                                            style: const TextStyle(
+                                                fontFamily: 'Poppins_Regular',
+                                                fontWeight: FontWeight.w700)),
+                                      ],
+                                    )
+                                  : const Text(''),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.08,
+                                  vertical: screenHeight * 0.005),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    login_password = value;
+                                    isPassError = false;
+                                  });
+                                },
+                                controller: passController,
+                                obscureText: true,
+                                obscuringCharacter: '*',
+                                decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  hintStyle: const TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: 'Poppins_Regular',
+                                  ),
+                                  fillColor: WhiteandBlack,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: isPassError
+                                        ? const BorderSide(color: Colors.red)
+                                        : BorderSide.none,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.030,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      if (login_email != null && login_password != null) {
-                        if (login_email!.endsWith('@gmail.com') &&
-                            login_password!.length >= 8) {
-                          final Map userdata =
-                              await getuserdata(login_password!);
-                          if (isuser == true) {
-                            await LocalStorage.setUserLoggedIn();
-                            await LocalStorage.saveuserdata(
-                                key: 'user_details', data: userdata);
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
-                          }
-                        }
-                        if (login_password!.length < 8 &&
-                            !login_email!.endsWith('@gmail.com')) {
-                          setState(() {
-                            isEmailError = true;
-                            isPassError = true;
-                            passController.clear();
-                            errorpass =
-                                'Password Must be Greater Than 8 letters';
-                            emailController.clear();
-                            erroremail = 'Enter Your Email with @gmail.com';
-                          });
-                        }
-                        if (!login_email!.endsWith('@gmail.com') &&
-                            login_password!.length >= 8) {
-                          setState(() {
-                            isEmailError = true;
-                            passController.clear();
-                            emailController.clear();
-                            erroremail = 'Enter Your Email with @gmail.com';
-                          });
-                        }
-                        if (login_password!.length < 8 &&
-                            login_email!.endsWith('@gmail.com')) {
-                          setState(() {
-                            isPassError = true;
-                            emailController.clear();
-                            passController.clear();
-                            errorpass =
-                                'Password Must be Greater Than 8 letters';
-                          });
-                        }
-                      }
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: screenWidth * 0.08,
+                                  top: screenHeight * 0.001),
+                              child: isPassError == true
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(bottom: 2),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.error,
+                                            color: Colors.red,
+                                            size: screenWidth * 0.05,
+                                          ),
+                                          SizedBox(
+                                            width: screenWidth * 0.02,
+                                          ),
+                                          Text(errorpass!,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Poppins_Regular',
+                                                  fontWeight: FontWeight.w700)),
+                                        ],
+                                      ),
+                                    )
+                                  : const Text(''),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.0010,
+                            ),
+                            Center(
+                              child: Text(
+                                "Or Continue With",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily: 'Viga',
+                                  fontSize: screenWidth * 0.05,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.020,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: screenWidth * 0.02,
+                                  left: screenWidth * 0.010),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: WhiteandBlack),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          width: screenWidth * 0.40,
+                                          height: screenHeight * 0.08,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.black
+                                                    .withOpacity(0.5)),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Colors.white,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(
+                                                screenWidth * 0.006),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: const AssetImage(
+                                                      'assets/images/Facebook_Icon.jpg'),
+                                                  height: screenWidth * 0.40,
+                                                  width: screenWidth * 0.10,
+                                                ),
+                                                SizedBox(
+                                                  width: screenWidth * 0.010,
+                                                ),
+                                                Text(
+                                                  "Facebook",
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        screenHeight * 0.022,
+                                                    fontFamily:
+                                                        'Poppins_Regular',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: screenWidth * 0.005,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: screenWidth * 0.1,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: WhiteandBlack),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        GoogleService.isloading = true;
+                                        setState(() {});
+                                        userGoogleDetails = await GoogleService
+                                            .signInWithGoogle();
+                                        if (GoogleService.isError == true) {
+                                          GoogleService.isloading = false;
+                                          setState(() {});
+                                          await Future.delayed(
+                                              Duration(seconds: 2));
+                                          GoogleService.isError = false;
+                                          setState(() {});
+                                        } else {
+                                          userSignInFirstName =
+                                              userGoogleDetails['firstName'];
+                                          userSignInLastName =
+                                              userGoogleDetails['lastName'];
+                                          userSignInEmail =
+                                              userGoogleDetails['email'];
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const BioSignUp(isAlready: true,)));
+                                        }
+                                      },
+                                      child: Container(
+                                        width: screenWidth * 0.40,
+                                        height: screenHeight * 0.08,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                              color: Colors.black
+                                                  .withOpacity(0.5)),
+                                          color: Colors.white,
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(
+                                              screenWidth * 0.006),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image(
+                                                image: const AssetImage(
+                                                    'assets/images/Google_Icon.jpg'),
+                                                height: screenWidth * 0.40,
+                                                width: screenWidth * 0.10,
+                                              ),
+                                              SizedBox(
+                                                width: screenWidth * 0.010,
+                                              ),
+                                              Text(
+                                                "Google",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      screenHeight * 0.022,
+                                                  fontFamily: 'Poppins_Regular',
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: screenWidth * 0.005,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.030,
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                if (login_email != null &&
+                                    login_password != null) {
+                                  if (login_email!.endsWith('@gmail.com') &&
+                                      login_password!.length >= 8) {
+                                    final Map userdata =
+                                        await getuserdata(login_password!);
+                                    if (isuser == true) {
+                                      await LocalStorage.setUserLoggedIn();
+                                      await LocalStorage.saveuserdata(
+                                          key: 'user_details', data: userdata);
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage()));
+                                    }
+                                  }
+                                  if (login_password!.length < 8 &&
+                                      !login_email!.endsWith('@gmail.com')) {
+                                    setState(() {
+                                      isEmailError = true;
+                                      isPassError = true;
+                                      passController.clear();
+                                      errorpass =
+                                          'Password Must be Greater Than 8 letters';
+                                      emailController.clear();
+                                      erroremail =
+                                          'Enter Your Email with @gmail.com';
+                                    });
+                                  }
+                                  if (!login_email!.endsWith('@gmail.com') &&
+                                      login_password!.length >= 8) {
+                                    setState(() {
+                                      isEmailError = true;
+                                      passController.clear();
+                                      emailController.clear();
+                                      erroremail =
+                                          'Enter Your Email with @gmail.com';
+                                    });
+                                  }
+                                  if (login_password!.length < 8 &&
+                                      login_email!.endsWith('@gmail.com')) {
+                                    setState(() {
+                                      isPassError = true;
+                                      emailController.clear();
+                                      passController.clear();
+                                      errorpass =
+                                          'Password Must be Greater Than 8 letters';
+                                    });
+                                  }
+                                }
 
-                      if (login_email == null ||
-                          login_email!.isEmpty && login_password == null ||
-                          login_password!.isEmpty) {
-                        setState(() {
-                          isEmailError = true;
-                          isPassError = true;
-                          emailController.clear();
-                          erroremail = 'Email Cannot be Empty';
-                          errorpass = 'Password Cannot be Empty';
-                          passController.clear();
-                        });
-                      }
-                    },
-                    child: Container(
-                      height: screenHeight * 0.07,
-                      width: screenWidth * 0.32,
-                      decoration: BoxDecoration(
-                        color: linearGreen,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: buttonFontSize,
-                            fontFamily: 'Poppins_SemiBold',
-                            fontWeight: FontWeight.w500,
-                          ),
+                                if (login_email == null ||
+                                    login_email!.isEmpty &&
+                                        login_password == null ||
+                                    login_password!.isEmpty) {
+                                  setState(() {
+                                    isEmailError = true;
+                                    isPassError = true;
+                                    emailController.clear();
+                                    erroremail = 'Email Cannot be Empty';
+                                    errorpass = 'Password Cannot be Empty';
+                                    passController.clear();
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: screenHeight * 0.07,
+                                width: screenWidth * 0.32,
+                                decoration: BoxDecoration(
+                                  color: linearGreen,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: buttonFontSize,
+                                      fontFamily: 'Poppins_SemiBold',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.005,
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(bottom: screenHeight * 0.010),
+                              child: Center(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignUpScreen()));
+                                  },
+                                  child: Text(
+                                    'Create An Account?',
+                                    style: TextStyle(
+                                      color: linearGreen,
+                                      fontFamily: 'Poppins_Regular',
+                                      fontSize: screenWidth * 0.045,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.005,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: screenHeight * 0.010),
-                    child: Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()));
-                        },
-                        child: Text(
-                          'Create An Account?',
-                          style: TextStyle(
-                            color: linearGreen,
-                            fontFamily: 'Poppins_Regular',
-                            fontSize: screenWidth * 0.045,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
