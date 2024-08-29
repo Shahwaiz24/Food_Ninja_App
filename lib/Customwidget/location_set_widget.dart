@@ -110,6 +110,30 @@ class _LocationSetTextFieldsState extends State<LocationSetTextFields> {
                 ),
               ),
             ),
+      SizedBox(
+        height: screenHeight * 0.040,
+      ),
+      TextFormField(
+        controller: streetController,
+      
+        decoration: InputDecoration(
+            hintText: "   Enter Street Address",
+            hintStyle: TextStyle(
+              color: Colors.black.withOpacity(0.6),
+            ),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black.withOpacity(0.6)),
+                borderRadius: BorderRadius.circular(screenWidth * 0.040)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(screenWidth * 0.040),
+              borderSide: BorderSide(color: Colors.black.withOpacity(0.6)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(screenWidth * 0.040),
+              borderSide: BorderSide(color: Colors.black.withOpacity(0.6)),
+            ),
+            enabled: true),
+      ),
     ]);
   }
 }

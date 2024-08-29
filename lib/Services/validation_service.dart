@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
 
 class ValidationService {
@@ -21,9 +22,9 @@ class ValidationService {
   }
 
   static String? check_location_Validity(
-      {required String? City, required String? Country}) {
+      {required String? City, required String? Country, required String? street}) {
     if ((City != null && City.isNotEmpty) &&
-        (Country != null && Country.isNotEmpty)) {
+        (Country != null && Country.isNotEmpty) && (street != null && street.isNotEmpty)) {
       return 'All Good';
     } else {
       return 'Error';

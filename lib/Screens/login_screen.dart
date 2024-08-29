@@ -298,6 +298,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: screenWidth * 0.40,
                                 height: screenHeight * 0.08,
                                 decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.black.withOpacity(0.5)),
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,
                                 ),
@@ -313,16 +315,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: screenWidth * 0.10,
                                       ),
                                       SizedBox(
-                                        width: screenWidth * 0.02,
+                                        width: screenWidth * 0.010,
                                       ),
                                       Text(
                                         "Facebook",
                                         style: TextStyle(
-                                          fontSize: screenWidth * 0.050,
+                                          fontSize: screenHeight * 0.022,
                                           fontFamily: 'Poppins_Regular',
                                           fontWeight: FontWeight.w800,
                                         ),
-                                      )
+                                      ),
+                                      SizedBox(
+                                        width: screenWidth * 0.005,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -345,6 +350,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: screenHeight * 0.08,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: Colors.black.withOpacity(0.5)),
                                 color: Colors.white,
                               ),
                               child: Padding(
@@ -359,16 +366,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       width: screenWidth * 0.10,
                                     ),
                                     SizedBox(
-                                      width: screenWidth * 0.02,
+                                      width: screenWidth * 0.010,
                                     ),
                                     Text(
                                       "Google",
                                       style: TextStyle(
-                                        fontSize: screenWidth * 0.050,
+                                        fontSize: screenHeight * 0.022,
                                         fontFamily: 'Poppins_Regular',
                                         fontWeight: FontWeight.w800,
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(
+                                      width: screenWidth * 0.005,
+                                    ),
                                   ],
                                 ),
                               ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/get_location.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
 import 'package:food_delivery_app/Services/validation_service.dart';
 import 'package:food_delivery_app/main.dart';
 
 bool isError = false;
 bool isClicked = false;
+String street = '';
 
 class SetLocationSignUp extends StatefulWidget {
   const SetLocationSignUp({super.key});
@@ -14,6 +14,8 @@ class SetLocationSignUp extends StatefulWidget {
   @override
   State<SetLocationSignUp> createState() => _PaymentSignUpState();
 }
+
+TextEditingController streetController = TextEditingController();
 
 class _PaymentSignUpState extends State<SetLocationSignUp> {
   @override
@@ -206,13 +208,16 @@ class _PaymentSignUpState extends State<SetLocationSignUp> {
                               : Text('')),
                       // Spacer(),
                       Padding(
-                        padding: EdgeInsets.only(top: screenHeight * 0.400),
+                        padding: EdgeInsets.only(top: screenHeight * 0.240),
                         child: InkWell(
                           onTap: () async {
+                            street = streetController.text;
                             // ignore: unused_local_variable
                             String? validation =
                                 ValidationService.check_location_Validity(
-                                    City: final_City, Country: final_Country);
+                                    street: street,
+                                    City: final_City,
+                                    Country: final_Country);
 
                             if (validation == 'All Good') {
                               setState(() {
@@ -221,7 +226,7 @@ class _PaymentSignUpState extends State<SetLocationSignUp> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProfileReady()));
+                                      builder: (context) => const ProfileReady()));
                             } else {
                               print(validation);
                               setState(() {
