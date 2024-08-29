@@ -203,7 +203,7 @@ class _PaymentSignUpState extends State<PaymentSignUp> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PictureSignUp()));
+                                      builder: (context) => const PictureSignUp()));
                             }
                           },
                           child: Container(

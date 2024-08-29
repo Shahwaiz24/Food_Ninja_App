@@ -246,6 +246,11 @@ class _BioSignUpState extends State<BioSignUp> {
                                       (password != null &&
                                           confirmPassword != null)) {
                                     userSignInPass = confirmPassword!;
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PaymentSignUp()));
                                   } else {
                                     errorPassword = true;
                                     setState(() {});
@@ -519,7 +524,7 @@ class _BioSignUpState extends State<BioSignUp> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                PaymentSignUp()));
+                                                const PaymentSignUp()));
                                   }
                                 },
                                 child: Container(
