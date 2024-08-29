@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
 import 'package:food_delivery_app/Customwidget/gridview.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:food_delivery_app/Screens/search_page.dart';
 
 import 'package:food_delivery_app/main.dart';
 
@@ -116,37 +117,47 @@ class _ResturantPageState extends State<ResturantPage> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                         right: screenWidth * 0.020),
-                                    child: Container(
-                                      height: screenHeight * 0.059,
-                                      width: screenWidth * 0.750,
-                                      decoration: BoxDecoration(
-                                        color: Lightorange.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(
-                                            screenHeight * 0.030),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: screenWidth * 0.040),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.search,
-                                              color: Darkorange,
-                                              size: 30,
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth * 0.020,
-                                            ),
-                                            Text(
-                                              'What do you want to order?',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins_Light',
-                                                color:
-                                                    Darkorange.withOpacity(0.9),
-                                                fontSize: screenHeight * 0.018,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchPage()));
+                                      },
+                                      child: Container(
+                                        height: screenHeight * 0.059,
+                                        width: screenWidth * 0.750,
+                                        decoration: BoxDecoration(
+                                          color: Lightorange.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(
+                                              screenHeight * 0.030),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: screenWidth * 0.040),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.search,
+                                                color: Darkorange,
+                                                size: 30,
                                               ),
-                                            ),
-                                          ],
+                                              SizedBox(
+                                                width: screenWidth * 0.020,
+                                              ),
+                                              Text(
+                                                'What do you want to order?',
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins_Light',
+                                                  color: Darkorange.withOpacity(
+                                                      0.9),
+                                                  fontSize:
+                                                      screenHeight * 0.018,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

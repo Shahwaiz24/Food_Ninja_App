@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
@@ -89,14 +88,18 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                   const Spacer(),
                     IconButton(
                       onPressed: () async {
                         await LocalStorage.logoutuser();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                 const LoginScreen()), // Replace NewScreen with your target screen
+                          (Route<dynamic> route) =>
+                              false, // This will remove all previous routes
+                        );
                       },
                       icon: Icon(
                         Icons.exit_to_app,
@@ -205,7 +208,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                           return Dismissible(
                               background: Container(
                                 decoration: BoxDecoration(
-                                    color: Color(0xffFF9012),
+                                    color : const Color(0xffFF9012),
                                     borderRadius: BorderRadius.circular(
                                         screenWidth * 0.050)),
                                 alignment: Alignment.centerRight,
@@ -310,7 +313,7 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
                                             ),
                                           ],
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                       ],
                                     ),
                                   ),

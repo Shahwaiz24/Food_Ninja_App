@@ -145,7 +145,12 @@ class _ResturantContentState extends State<ProductContent> {
                             item: itemtodelete, index: widget.index_);
                         print('Before Delete | ${Favourite_data}');
 
-                        Favourite_data.remove(Favourite_data[widget.index_]);
+                        try {
+                          Favourite_data.removeWhere(
+                              (item) => item['index'] == widget.index_);
+                        } on Exception catch (e) {
+                          print("Error in Removing List ${e}");
+                        }
                         print('After Delete | ${Favourite_data}');
                       }
                     },

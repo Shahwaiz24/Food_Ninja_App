@@ -143,22 +143,27 @@ class LocalStorage {
 
   static Future<void> removefavourite(
       {required Map<String, dynamic> item, required int index}) async {
-    // Fetching the existing list from SharedPreferences
-    String? jsonString = prefs.getString('My_Favourites');
-    if (jsonString != null) {
-      // If existing list is found, decode it
-      List<dynamic> decodedList = json.decode(jsonString);
-      // Cast each item of decoded list to Map<String, dynamic>
-      List<Map<String, dynamic>> existingList =
-          decodedList.cast<Map<String, dynamic>>();
-      // Add the new item to the existing list
-      existingList.remove(existingList[index]);
-      print(existingList);
-      // Encode the updated list to JSON
-      String updatedJsonString = json.encode(existingList);
-      // Save the updated list to SharedPreferences
-      await prefs.setString('My_Favourites', updatedJsonString);
-      // prefs.clear();
+    try {
+      // Fetching the existing list from SharedPreferences
+      String? jsonString = prefs.getString('My_Favourites');
+      if (jsonString != null) {
+        // If existing list is found, decode it
+        List<dynamic> decodedList = json.decode(jsonString);
+        // Cast each item of decoded list to Map<String, dynamic>
+        List<Map<String, dynamic>> existingList =
+            decodedList.cast<Map<String, dynamic>>();
+        // Add the new item to the existing list
+        existingList..removeWhere((item) => item['index'] == index);
+        // existingList.remove(existingList[index]);
+        print(existingList);
+        // Encode the updated list to JSON
+        String updatedJsonString = json.encode(existingList);
+        // Save the updated list to SharedPreferences
+        await prefs.setString('My_Favourites', updatedJsonString);
+        // prefs.clear();
+      }
+    } catch (e) {
+      print("Error In Local Storage: ${e}");
     }
   }
 

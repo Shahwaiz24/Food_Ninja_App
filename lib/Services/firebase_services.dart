@@ -77,7 +77,7 @@ class ImageUrlGetter {
       required String Firstname,
       required String Lastname}) async {
     firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref('${Firstname} ${Lastname}/Images');
+        .ref('${Firstname+Lastname}/Images');
 
     firebase_storage.UploadTask uploadTask = ref.putFile(image);
     // Wait for the upload to complete
