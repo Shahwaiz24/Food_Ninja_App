@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
 
 Map<String, dynamic> user_details = {};
@@ -35,11 +36,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Function to check if a child node exists in 'Users DataBase' node and return the child's data as a Map or a boolean value if the child does not exist
   final FirebaseDatabase database = FirebaseDatabase.instance;
-  Future<Map<dynamic, dynamic>> getuserdata(String childName) async {
+
+  Future<Map<String, dynamic>> getuserdata(String childName) async {
     DatabaseReference userDatabaseRef = database.ref().child('Users DataBase');
     DataSnapshot snapshot = await userDatabaseRef.child(childName).get();
     if (snapshot.exists) {
-      user_details = snapshot.value as Map<String, dynamic>;
+      // Explicitly convert the Map<Object?, Object?> to Map<String, dynamic>
+      Map<dynamic, dynamic> originalMap =
+          snapshot.value as Map<dynamic, dynamic>;
+      user_details =
+          originalMap.map((key, value) => MapEntry(key as String, value));
+
       isuser = true;
       return user_details;
     } else {
@@ -379,8 +386,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (login_email != null && login_password != null) {
                         if (login_email!.endsWith('@gmail.com') &&
                             login_password!.length >= 8) {
-                          await getuserdata(login_password!);
+                          final Map userdata =
+                              await getuserdata(login_password!);
                           if (isuser == true) {
+                            await LocalStorage.setUserLoggedIn();
+                            await LocalStorage.saveuserdata(
+                                key: 'user_details', data: userdata);
                             // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                                 context,
