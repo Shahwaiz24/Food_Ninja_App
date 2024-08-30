@@ -24,6 +24,7 @@ class FirebaseServices {
     required city,
     required country,
     required cardname,
+    required street,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -57,8 +58,10 @@ class FirebaseServices {
           'cardname': cardname
         },
         'userlocation': {
+          'street' : street,
           'city': city,
           'Country': country,
+          
         },
         'userProfilePhoto': userImage
       });

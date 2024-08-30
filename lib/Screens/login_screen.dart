@@ -9,6 +9,7 @@ import 'package:food_delivery_app/main.dart';
 
 Map<String, dynamic> user_details = {};
 Map<String, dynamic> userGoogleDetails = {};
+Map<String, dynamic> userFacebookDetails = {};
 bool isuser = false;
 
 // Functions End //
@@ -104,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            GoogleService.isloading == true
+            GoogleandFacebookService.isloading == true
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -115,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     ],
                   )
-                : GoogleService.isError == true
+                : GoogleandFacebookService.isError == true
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,7 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: screenWidth * 0.010,
                               ),
                               Text(
-                                userGoogleDetails['details'],
+                                GoogleandFacebookService.isFacebookerror == true
+                                    ? userFacebookDetails['details']
+                                    : userGoogleDetails['details'],
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: screenHeight * 0.030),
@@ -340,7 +343,43 @@ class _LoginScreenState extends State<LoginScreen> {
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () async {
+                                          GoogleandFacebookService.isloading =
+                                              true;
+                                          setState(() {});
+                                          userFacebookDetails =
+                                              await GoogleandFacebookService
+                                                  .signInWithFacebook();
+                                          if (GoogleandFacebookService
+                                                  .isError ==
+                                              true) {
+                                            GoogleandFacebookService.isloading =
+                                                false;
+                                            setState(() {});
+                                            await Future.delayed(
+                                                Duration(seconds: 2));
+                                            GoogleandFacebookService.isError =
+                                                false;
+                                            GoogleandFacebookService
+                                                .isFacebookerror = false;
+                                            setState(() {});
+                                          } else {
+                                            userSignInFirstName =
+                                                userFacebookDetails[
+                                                    'firstName'];
+                                            userSignInLastName =
+                                                userFacebookDetails['lastName'];
+                                            userSignInEmail =
+                                                userFacebookDetails['email'];
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const BioSignUp(
+                                                          isAlready: true,
+                                                        )));
+                                          }
+                                        },
                                         child: Container(
                                           width: screenWidth * 0.40,
                                           height: screenHeight * 0.08,
@@ -398,16 +437,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        GoogleService.isloading = true;
+                                        GoogleandFacebookService
+                                            .isFacebookerror = false;
+                                        GoogleandFacebookService.isloading =
+                                            true;
                                         setState(() {});
-                                        userGoogleDetails = await GoogleService
-                                            .signInWithGoogle();
-                                        if (GoogleService.isError == true) {
-                                          GoogleService.isloading = false;
+                                        userGoogleDetails =
+                                            await GoogleandFacebookService
+                                                .signInWithGoogle();
+                                        if (GoogleandFacebookService.isError ==
+                                            true) {
+                                          GoogleandFacebookService.isloading =
+                                              false;
                                           setState(() {});
                                           await Future.delayed(
                                               Duration(seconds: 2));
-                                          GoogleService.isError = false;
+                                          GoogleandFacebookService.isError =
+                                              false;
+
                                           setState(() {});
                                         } else {
                                           userSignInFirstName =
@@ -420,7 +467,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const BioSignUp(isAlready: true,)));
+                                                      const BioSignUp(
+                                                        isAlready: true,
+                                                      )));
                                         }
                                       },
                                       child: Container(

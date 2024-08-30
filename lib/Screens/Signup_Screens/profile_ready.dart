@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
+import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
 import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
 import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Services/firebase_services.dart';
@@ -37,6 +38,7 @@ class _ProfileReadyState extends State<ProfileReady> {
             country: final_Country,
             cvvNumber: cvvNumber,
             cardnumber: cardNumber,
+            street: street,
             cardname: cardname)
         .then((_) {
       // When the async function completes, stop the timer
