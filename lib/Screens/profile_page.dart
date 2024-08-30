@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Customwidget/bottomsheet.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Customwidget/bottomsheet.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
+import 'package:Food_Ninja/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Its an Profile Page who Contains all The Information of User //

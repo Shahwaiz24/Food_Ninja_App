@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/set_location.dart';
+import 'package:Food_Ninja/main.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

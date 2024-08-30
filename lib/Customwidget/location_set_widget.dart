@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/set_location.dart';
 
 String? final_Country;
 String? final_City;

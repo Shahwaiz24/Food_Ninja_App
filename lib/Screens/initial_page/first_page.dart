@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/initial_page/second_page.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/initial_page/second_page.dart';
+import 'package:Food_Ninja/main.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key});

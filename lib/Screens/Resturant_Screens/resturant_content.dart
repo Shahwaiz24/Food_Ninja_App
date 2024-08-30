@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/custom_list_view.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/Screens/menu_page.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Customwidget/custom_list_view.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
+import 'package:Food_Ninja/Screens/menu_page.dart';
+import 'package:Food_Ninja/main.dart';
 
 class ResturantContent extends StatefulWidget {
   final int index_;

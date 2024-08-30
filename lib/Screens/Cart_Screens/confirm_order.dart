@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/order_details_screen.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmOrder extends StatefulWidget {

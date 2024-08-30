@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/payment_signup.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
-import 'package:food_delivery_app/Services/google_facebook_service.dart';
-import 'package:food_delivery_app/Services/validation_service.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/payment_signup.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/picture_signup.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/signup_screen.dart';
+import 'package:Food_Ninja/Services/google_facebook_service.dart';
+import 'package:Food_Ninja/Services/validation_service.dart';
+import 'package:Food_Ninja/main.dart';
 
 // Final Bio Values //
 String userSignInFirstName = '';

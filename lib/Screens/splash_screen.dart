@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
-import 'package:food_delivery_app/Screens/initial_page/first_page.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
+import 'package:Food_Ninja/Screens/initial_page/first_page.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({

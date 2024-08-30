@@ -1,5 +1,4 @@
-import 'package:flutter/rendering.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/bio_signup.dart';
 
 class ValidationService {
   static String? check_Bio_Validity(

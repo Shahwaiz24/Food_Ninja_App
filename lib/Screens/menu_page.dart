@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Screens/Product_Screen/product_screen.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Screens/Product_Screen/product_screen.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:food_delivery_app/Screens/search_page.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/search_page.dart';
+import 'package:Food_Ninja/main.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);

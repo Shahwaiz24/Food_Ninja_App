@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Customwidget/gridview.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Customwidget/gridview.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:food_delivery_app/Screens/search_page.dart';
+import 'package:Food_Ninja/Screens/search_page.dart';
 
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/main.dart';
 
 class ResturantPage extends StatefulWidget {
   const ResturantPage({Key? key}) : super(key: key);

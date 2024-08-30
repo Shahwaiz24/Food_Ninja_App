@@ -1,12 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottomsheet.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Food_Ninja/Customwidget/bottomsheet.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/order_details_screen.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 
 bool carted = false;
 

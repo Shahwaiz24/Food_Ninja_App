@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/confirm_order.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/confirm_order.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int subtotalPrice = 0;

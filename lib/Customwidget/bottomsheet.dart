@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
-import 'package:food_delivery_app/Screens/login_screen.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
+import 'package:Food_Ninja/Screens/login_screen.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 
 // Its an Custom Bottom Sheet for Display the User Information to Page//
 

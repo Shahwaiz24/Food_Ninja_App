@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/order_details_screen.dart';
 
-import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:food_delivery_app/Screens/profile_page.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/profile_page.dart';
+import 'package:Food_Ninja/main.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
@@ -86,9 +86,9 @@ class BottomNavigation extends StatelessWidget {
                 },
                 child: Center(
                     child: badges.Badge(
-                  badgeContent: const Center(
+                  badgeContent:  Center(
                     child: Text(
-                      '7',
+                      cartitems.length.toString(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

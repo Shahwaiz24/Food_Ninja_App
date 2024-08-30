@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Customwidget/slider.dart';
-import 'package:food_delivery_app/Screens/Product_Screen/product_screen.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/Screens/menu_page.dart';
-import 'package:food_delivery_app/Screens/resturants_page.dart';
-import 'package:food_delivery_app/Screens/search_page.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Customwidget/slider.dart';
+import 'package:Food_Ninja/Screens/Product_Screen/product_screen.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
+import 'package:Food_Ninja/Screens/menu_page.dart';
+import 'package:Food_Ninja/Screens/resturants_page.dart';
+import 'package:Food_Ninja/Screens/search_page.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 import 'package:badges/badges.dart' as badges;
 
 // Its an Home Page of Our Application //

@@ -1,8 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/login_screen.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/login_screen.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/bio_signup.dart';
+import 'package:Food_Ninja/main.dart';
 
 // Final Assigned Values //
 String userSignInEmail = '';

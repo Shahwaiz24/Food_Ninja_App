@@ -1,11 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/bio_signup.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/signup_screen.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
-import 'package:food_delivery_app/Services/google_facebook_service.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/bio_signup.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/signup_screen.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
+import 'package:Food_Ninja/Services/google_facebook_service.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 
 Map<String, dynamic> user_details = {};
 Map<String, dynamic> userGoogleDetails = {};

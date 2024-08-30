@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/payment_box.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/payment_box.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/picture_signup.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
+import 'package:Food_Ninja/main.dart';
 bool isError = false;
 String? cardname;
 

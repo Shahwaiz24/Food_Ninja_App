@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/check_out_sheet.dart';
-import 'package:food_delivery_app/Screens/search_page.dart';
-import 'package:food_delivery_app/Services/local_storage.dart';
-import 'package:food_delivery_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/check_out_sheet.dart';
+import 'package:Food_Ninja/Services/local_storage.dart';
+import 'package:Food_Ninja/main.dart';
 
 List<Map<String, dynamic>> cartitems = [];
 

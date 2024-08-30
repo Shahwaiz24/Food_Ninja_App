@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/location_set_widget.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/profile_ready.dart';
-import 'package:food_delivery_app/Services/validation_service.dart';
-import 'package:food_delivery_app/main.dart';
+import 'package:Food_Ninja/Customwidget/location_set_widget.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/profile_ready.dart';
+import 'package:Food_Ninja/Services/validation_service.dart';
+import 'package:Food_Ninja/main.dart';
 
 bool isError = false;
 bool isClicked = false;

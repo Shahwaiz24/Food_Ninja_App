@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Customwidget/bottom_navigation.dart';
-import 'package:food_delivery_app/Screens/Resturant_Screens/resturant_content.dart';
-import 'package:food_delivery_app/Screens/data_model.dart';
+import 'package:Food_Ninja/Customwidget/bottom_navigation.dart';
+import 'package:Food_Ninja/Screens/Resturant_Screens/resturant_content.dart';
+import 'package:Food_Ninja/Screens/data_model.dart';
 
 // ignore: must_be_immutable
 class ResturantScreen extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-import 'package:food_delivery_app/Screens/Signup_Screens/picture_signup.dart';
+import 'package:Food_Ninja/Screens/Signup_Screens/picture_signup.dart';
 
 class FirebaseServices {
   static final databaseRef = FirebaseDatabase.instance.ref('Users DataBase');

@@ -1,4 +1,4 @@
-name: food_delivery_app
+name: Food_Ninja
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -60,7 +60,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.13.1"
-  
+
 flutter_launcher_icons:
       android: true
       ios: true

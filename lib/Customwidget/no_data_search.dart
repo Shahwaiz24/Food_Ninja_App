@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/search_page.dart';
+import 'package:Food_Ninja/Screens/search_page.dart';
 
 class NullSearch extends StatelessWidget {
   const NullSearch({super.key});

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:food_delivery_app/Customwidget/bottomsheet.dart';
-import 'package:food_delivery_app/Screens/Cart_Screens/order_details_screen.dart';
-import 'package:food_delivery_app/Screens/home_page.dart';
+import 'package:Food_Ninja/Customwidget/bottomsheet.dart';
+import 'package:Food_Ninja/Screens/Cart_Screens/order_details_screen.dart';
+import 'package:Food_Ninja/Screens/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Map<String, dynamic> savedDetails = {};
