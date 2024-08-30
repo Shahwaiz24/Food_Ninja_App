@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Screens/Signup_Screens/set_location.dart';
-import 'package:food_delivery_app/Screens/login_screen.dart';
 import 'package:food_delivery_app/Screens/splash_screen.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/firebase_options.dart';
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

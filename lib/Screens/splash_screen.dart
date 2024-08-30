@@ -5,7 +5,6 @@ import 'package:food_delivery_app/Screens/home_page.dart';
 import 'package:food_delivery_app/Screens/initial_page/first_page.dart';
 import 'package:food_delivery_app/Services/local_storage.dart';
 import 'package:food_delivery_app/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
